@@ -1,15 +1,23 @@
 import {PropsWithChildren} from "react";
 import SidebarAdmin from "@/components/admin/layout/sidebar-admin";
+import NavbarAdmin from "@/components/admin/layout/navbar-admin";
 
-const LayoutAdmin = (props: PropsWithChildren) => {
+const Layout = (props: PropsWithChildren) => {
   return (
     <>
-      <div className="flex space-x-3 min-h-screen">
+      <div className="flex min-h-screen">
         <SidebarAdmin/>
-        {props.children}
+        <div className="flex flex-col w-full">
+          <NavbarAdmin/>
+          <div className="bg-[#F9FAFB]">
+            <div className="container py-8">
+              {props.children}
+            </div>
+          </div>
+        </div>
       </div>
     </>
   )
 }
 
-export default LayoutAdmin;
+export default Layout;

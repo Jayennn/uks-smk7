@@ -1,35 +1,39 @@
 import {FileText, LayoutDashboard, type LucideIcon, Newspaper} from "lucide-react";
 import {Accordion, AccordionContent, AccordionItem, AccordionTrigger} from "@/components/ui/accordion";
 import * as React from "react";
-import {ChevronDownIcon} from "@radix-ui/react-icons";
 import {useState} from "react";
+import {ChevronDownIcon} from "@radix-ui/react-icons";
 import {cn} from "@/lib/utils";
+import {useRouter} from "next/router";
+import Link from "next/link";
 
 type LinkTypes = {
   icon: LucideIcon,
   label: string,
-  subItem?: [
-    {
-      label: string
-    }
-  ]
-  link?: string
+  href?: string
+  subItem?: Array<{
+    label: string
+    href: string
+  }>
 }
 
 const linksDef: LinkTypes[] = [
   {
     icon: LayoutDashboard,
     label: "Dashboard",
+    href: "/admin-uks"
   },
   {
     icon: FileText,
     label: "Forms",
     subItem: [
       {
-        label: "Opsi Rapor Kesehatan"
+        label: "Opsi Rapor Kesehatan",
+        href: "/admin-uks/forms/option-forms"
       },
       {
-        label: "Form Rapor Kesehatan"
+        label: "Form Rapor Kesehatan",
+        href: "#"
       }
     ]
   },
@@ -38,54 +42,95 @@ const linksDef: LinkTypes[] = [
     label: "Master Data",
     subItem: [
       {
-        label: "Siswa Sakit"
+        label: "Siswa Sakit",
+        href: "#"
+      },
+      {
+        label: "Siswa Sakit",
+        href: "#"
       }
     ]
   }
 ]
 
 const SidebarAdmin = () => {
-  const [isActive, setIsActive] = useState<0>( 0)
+  const [isActive, setIsActive] = useState<number>(0)
+  const router = useRouter();
+  console.log(router.pathname)
 
-  console.log(Array.isArray(isActive))
   return (
     <>
-      <aside className="flex flex-col space-y-4 max-w-[18rem] w-full text-[#222831] shadow-md">
+      <aside className="bg-[#FFFFFF] flex flex-col space-y-4 max-w-[18rem] w-full text-[#222831] border-r">
         <div className="text-center py-4">
           <h1 className="text-2xl font-semibold">UKS</h1>
         </div>
         <div className="px-4">
-          <div className="flex flex-col gap-3">
+          <Accordion
+            className="flex flex-col gap-3"
+            type="single"
+            collapsible
+          >
             {linksDef.map((link, index) => (
               <>
-                <Accordion type="single" collapsible>
-                  <AccordionItem value={`navigation-${link.label}`} className="border-none">
+                  <AccordionItem key={`navigation-${link.label}`} value={`navigation-${link.label}`} className="border-none">
                     <AccordionTrigger
+                      asChild={!link.subItem}
                       onClick={() => setIsActive(index)}
-                      className={cn("px-3 py-2 hover:no-underline rounded-md hover:bg-[#EEEEEE]", isActive === index && "bg-[#EEEEEE]" )}>
-                      <div className="flex items-center gap-3">
-                        <link.icon/>
-                        {link.label}
-                      </div>
-                      {link.subItem && (
-                        <ChevronDownIcon
-                          className="h-4 w-4 shrink-0 text-muted-foreground transition-transform duration-200"/>
+                      className={cn(
+                        "transition-all px-4 py-3 hover:no-underline rounded-lg hover:bg-[#EEEEEE]",
+                        isActive === index && "bg-[#EEEEEE]"
+                      )}>
+                      {link?.href ? (
+                        <Link href={link.href}>
+                          <div className="flex items-center gap-3">
+                            <link.icon size={20}/>
+                            {link.label}
+                          </div>
+                        </Link>
+                      ) : (
+                        <>
+                          <div className="flex items-center gap-3">
+                            <link.icon size={20}/>
+                            {link.label}
+                          </div>
+                          {link.subItem && (
+                            <ChevronDownIcon
+                              className="h-4 w-4 shrink-0 text-muted-foreground transition-transform duration-200"/>
+                          )}
+                        </>
                       )}
                     </AccordionTrigger>
                     {link.subItem && (
-                      <AccordionContent className="pl-12 cursor-pointer font-medium">
-                        {link.subItem.map((sub_item) => (
-                            <div key={`sub-${sub_item.label}`} className="pt-4">
-                              {sub_item.label}
+                      <AccordionContent
+                        className={cn("pl-12 cursor-pointer font-medium", !router.pathname)}
+                      >
+                        {link.subItem.map((sub_item, index) => (
+                          <>
+                            <div className="group relative">
+                              <div
+                                className="absolute bottom-0 w-0 transition-all group-hover:w-full h-[0.03rem] bg-black/70"></div>
+                              {sub_item?.href ? (
+                                <Link
+                                  key={`sub-${sub_item.label}-${index}`} className="inline-block w-full py-4"
+                                  href={sub_item.href}
+                                >
+                                  {sub_item.label}
+                                </Link>
+                              ) : (
+                                <div className="inline-block w-full py-4">
+                                  {sub_item.label}
+                                </div>
+                              )}
                             </div>
+                          </>
+
                         ))}
                       </AccordionContent>
                     )}
                   </AccordionItem>
-                </Accordion>
               </>
             ))}
-          </div>
+          </Accordion>
         </div>
       </aside>
     </>

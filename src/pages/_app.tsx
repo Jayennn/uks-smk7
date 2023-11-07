@@ -24,8 +24,7 @@ export default function App({
         <>
             <SessionProvider session={session}>
                 <main className={cn(
-                    poppins.variable,
-                    "min-h-screen bg-background font-sans antialiased"
+                    "min-h-screen bg-background font-inter antialiased"
                 )}>
                     {getLayout(<Component {...pageProps} />)}
                 </main>
