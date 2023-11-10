@@ -9,7 +9,7 @@ const Layout = (props: PropsWithChildren) => {
         <SidebarAdmin/>
         <div className="flex flex-col w-full">
           <NavbarAdmin/>
-          <div className="bg-[#F9FAFB]">
+          <div className="h-full bg-[#F9FAFB]">
             <div className="container py-8">
               {props.children}
             </div>

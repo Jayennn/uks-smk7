@@ -1,5 +1,4 @@
 import NextAuth from "next-auth";
-import {authOptions} from "@/pages/api/auth/auth-options";
+import {auth} from "@/server/api/auth";
 
-export default NextAuth(authOptions);
-
+export default NextAuth(auth);

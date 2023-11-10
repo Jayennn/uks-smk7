@@ -2,7 +2,7 @@ import {Button} from "@/components/ui/button";
 import {Label} from "@/components/ui/label";
 import {Input} from "@/components/ui/input";
 import {useForm} from "react-hook-form";
-import {LoginForm, loginSchema} from "@/schema/auth";
+import {LoginForm, loginSchema} from "@/server/api/routers/auth/schema";
 import {zodResolver} from "@hookform/resolvers/zod";
 import {signIn} from "next-auth/react";
 import {useRouter} from "next/router";

@@ -1,8 +1,4 @@
-
-
-import
-    axios,
-    {type AxiosRequestConfig }
+import axios, { type AxiosRequestConfig }
 from "axios";
 import {env} from "@/env.mjs";
 

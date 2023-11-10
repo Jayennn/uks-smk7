@@ -5,6 +5,7 @@ import {useSession} from "next-auth/react";
 
 const Home = () => {
     const {data: session} = useSession();
+    console.log(session?.user)
     return (
         <>
             <main
@@ -13,7 +14,7 @@ const Home = () => {
                 <div className="z-10 max-w-5xl w-full items-center justify-between text-sm lg:flex">
                     <Button size="lg" asChild>
                         <Link href="/login">
-                            {session?.user?.name ?? "Login"}
+                            {session?.user?.username ?? "Login"}
                         </Link>
                     </Button>
                     <div
