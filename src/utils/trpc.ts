@@ -24,6 +24,11 @@ const getBaseUrl = () => {
 export const trpc = createTRPCNext<AppRouter>({
   config(){
     return {
+      /**
+       * Links used to determine request flow from client to server.
+       *
+       * @see https://trpc.io/docs/links
+       */
       links: [
         loggerLink({
           enabled: (opts) => process.env.NODE_ENV === "development" || (opts.direction === "down" && opts.result instanceof Error)

@@ -151,7 +151,7 @@ const ModalDetailMember = ({open, onOpenChange, id}: DialogProps) => {
 const Action = ({row}: CellContext<UksMember, unknown>) => {
   const { toast } = useToast();
   const {id} = row.original;
-  const ctx = trpc.useUtils();
+  const ctx = trpc.useContext();
   const [openCreateDialog, setOpenCreateDialog] = useAtom(openDetail)
   const [openUpdateDialog, setOpenUpdateDialog] = useState(false)
   const [idMember, setIdMember] = useAtom(IDMemberAtom)
