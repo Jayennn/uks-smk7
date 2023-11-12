@@ -23,10 +23,10 @@ export const authToken = (
 Axios.interceptors.response.use(
     (response) => response,
     (error) => {
-        const message: unknown = error.response.data.message;
-        if (error.response.data.errors) {
-            const errs = error.response.data.errors;
+        const message: unknown = error.response?.data.message;
 
+        if (error.response?.data.errors) {
+            const errs = error.response?.data.errors;
             error.message = Object.keys(errs)
                 .slice(0, 1)
                 .map((e) => {

@@ -1,46 +1,52 @@
-import {NextPageWithLayout} from "@/pages/_app";
-import Head from "next/head";
-import {ReactElement} from "react";
-import LayoutAdmin from "@/components/admin/layout/layout-admin";
-import {useForm} from "react-hook-form";
-import {UksMemberForm, uksMemberFormSchema} from "@/server/api/routers/uks-member/schema";
-import {zodResolver} from "@hookform/resolvers/zod";
-import {Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle} from "@/components/ui/dialog";
-import {DialogProps} from "@radix-ui/react-dialog";
 import {Label} from "@/components/ui/label";
 import {Input} from "@/components/ui/input";
-import {Button} from "@/components/ui/button";
+import {useForm} from "react-hook-form";
+import {UksMember, UksMemberForm, uksMemberSchema} from "@/server/api/routers/uks-member/schema";
+import {zodResolver} from "@hookform/resolvers/zod";
+import {Axios} from "@/utils/axios";
+import {useSession} from "next-auth/react";
+import {DialogProps} from "@radix-ui/react-dialog";
+import {Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle} from "@/components/ui/dialog";
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from "@/components/ui/select";
+import {Button} from "@/components/ui/button";
 import {trpc} from "@/utils/trpc";
 import {useToast} from "@/components/ui/use-toast";
-
-export const FormCreateMember = ({close}: {
+interface UpdateMemberProps {
+  id: number
   close: ((open: boolean) => void) | undefined
-}) => {
+}
+
+const FormUpdateMember = ({id, close}: UpdateMemberProps) => {
   const {toast} = useToast();
+  const { data: session } = useSession()
+  const ctx = trpc.useUtils() // New Version useUtils
 
   const {
     register,
-    handleSubmit,
     setValue,
-    formState: {errors},
-  } = useForm<UksMemberForm>({
-    resolver: zodResolver(uksMemberFormSchema),
-    defaultValues: {
-      nama: "",
-      alamat: "",
-      jenis_kelamin: "",
-      notelp: "",
-      nisn: "",
-      kelas: ""
+    watch,
+    handleSubmit,
+    formState: { errors }
+  } = useForm<UksMember>({
+    resolver: zodResolver(uksMemberSchema),
+    defaultValues: async() => {
+      const res = await Axios.get(`/admin/anggota/${id}`, {
+        headers: {Authorization: `Bearer ${session?.user.token ?? ""}`},
+      })
+      const { anggota } = res.data as {
+        message: string,
+        anggota: UksMember
+      }
+
+      return anggota
     }
   })
 
+
   const isModal = close !== undefined
 
-  const ctx = trpc.useUtils() // New Version useUtils
-  const create_member = trpc.member.create.useMutation({
-    onSuccess: async ({message}) => {
+  const updateMember = trpc.member.update.useMutation({
+    onSuccess: async({message}) => {
       toast({
         title: "Message",
         description: message
@@ -51,20 +57,22 @@ export const FormCreateMember = ({close}: {
       }
     },
     onError: ({data, message}) => {
-
       toast({
         title: "Error",
         variant: "destructive",
-        // @ts-ignore
         description: data?.errZod ?? message
       })
     }
   })
 
-
-  const onSubmit = async (data: UksMemberForm) => {
-    await create_member.mutateAsync(data)
+  const onSubmit = async(data: UksMemberForm) => {
+    await updateMember.mutateAsync({
+      id: id,
+      data: data
+    })
   }
+
+
   return (
     <>
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
@@ -79,7 +87,6 @@ export const FormCreateMember = ({close}: {
             <Input {...register("nisn")} placeholder="0068******"/>
             {errors.nisn?.message && <p className="text-xs font-medium text-red-500">{errors.nisn?.message}</p>}
           </div>
-
           <div className="flex flex-col gap-2">
             <Label>Alamat: </Label>
             <Input {...register("alamat")} placeholder="Jl. Bungtomo"/>
@@ -98,7 +105,7 @@ export const FormCreateMember = ({close}: {
             </div>
             <div className="col-span-2 flex flex-col gap-2">
               <Label>Jenis Kelamin: </Label>
-              <Select onValueChange={(value: string) => setValue("jenis_kelamin", value)}>
+              <Select value={watch("jenis_kelamin")} onValueChange={(value: string) => setValue("jenis_kelamin", value)}>
                 <SelectTrigger>
                   <SelectValue placeholder="Jenis Kelamin"/>
                 </SelectTrigger>
@@ -112,31 +119,36 @@ export const FormCreateMember = ({close}: {
             </div>
           </div>
         </div>
-        <div className="flex justify-end gap-2">
-          <Button
-            disabled={create_member.isLoading}
-            variant="ghost"
-            type="button"
-            onClick={() => close ? close(false) : null}
-          >Close</Button>
-          <Button disabled={create_member.isLoading}>Tambah</Button>
-        </div>
+          <div className="flex justify-end gap-2">
+            <Button
+              disabled={updateMember.isLoading}
+              variant="ghost"
+              type="button"
+              onClick={() => close ? close(false) : null}
+            >Close</Button>
+            <Button disabled={updateMember.isLoading}>Edit</Button>
+          </div>
       </form>
     </>
   )
 }
 
-export const ModalCreateMember = ({...props}: DialogProps) => {
+const ModalUpdateMember = ({...props}: DialogProps & {
+  id: number
+}) => {
   return (
     <>
       <Dialog {...props}>
         <DialogContent className="font-inter sm:max-w-[580px]">
           <DialogHeader>
-            <DialogTitle>Tambah Anggota</DialogTitle>
-            <DialogDescription>Formulir Tambah Anggota UKS</DialogDescription>
+            <DialogTitle>Update Anggota</DialogTitle>
+            <DialogDescription>
+              Formulir Update Anggota UKS
+            </DialogDescription>
           </DialogHeader>
-          <FormCreateMember
+          <FormUpdateMember
             close={props.onOpenChange}
+            id={props.id}
           />
         </DialogContent>
       </Dialog>
@@ -144,19 +156,4 @@ export const ModalCreateMember = ({...props}: DialogProps) => {
   )
 }
 
-const Page: NextPageWithLayout = () => {
-  return (
-    <>
-      <Head>
-        <title>Create Member - UKS</title>
-      </Head>
-      <h1>Tes</h1>
-    </>
-  )
-}
-
-Page.getLayout = function getLayout(page: ReactElement) {
-  return <LayoutAdmin>{page}</LayoutAdmin>
-}
-
-export default Page;
+export default ModalUpdateMember;

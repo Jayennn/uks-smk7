@@ -5,7 +5,6 @@ import {SessionProvider} from "next-auth/react";
 import {type ReactElement, type ReactNode} from "react";
 import {Session} from "next-auth";
 import {NextPage} from "next";
-import {QueryClient, QueryClientProvider} from "@tanstack/react-query";
 import {trpc} from "@/utils/trpc";
 import { Toaster } from "@/components/ui/toaster"
 import {inter} from "@/lib/font";
@@ -21,21 +20,18 @@ const MyApp = ({
     Component,
     pageProps: {session, ...pageProps}
 }: AppPropsWithLayout) => {
-    const queryClient = new QueryClient
     const getLayout = Component.getLayout || ((page) => page)
     return (
         <>
-            <QueryClientProvider client={queryClient}>
                 <SessionProvider session={session}>
                     <main className={cn(
                         inter.variable,
                         "min-h-screen bg-background font-inter antialiased"
                     )}>
                         {getLayout(<Component {...pageProps} />)}
-                        <Toaster/>
+                        <Toaster />
                     </main>
                 </SessionProvider>
-            </QueryClientProvider>
         </>
     )
 }

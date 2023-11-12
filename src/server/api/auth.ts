@@ -1,23 +1,27 @@
-import {DefaultSession, getServerSession, NextAuthOptions} from "next-auth";
+import {DefaultSession, getServerSession, NextAuthOptions, DefaultUser} from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import {Axios} from "@/utils/axios";
-import jwt from "jsonwebtoken"
 import {GetServerSidePropsContext} from "next";
-
-
-
 
 declare module "next-auth" {
     interface Session extends DefaultSession {
         user: {
-            id: string,
+            id: string | number,
+            id_user: string | number | null,
             username: string,
-            level: string,
+            level: number,
             last_login: string,
             token: string
 
         },
         expires: string
+    }
+    interface User extends DefaultUser {
+        message: string,
+        token: string,
+        id: string,
+        username: string,
+        level: number,
     }
 }
 export const auth: NextAuthOptions = {
@@ -47,23 +51,27 @@ export const auth: NextAuthOptions = {
                    token: string,
                    user: {
                        id: string | number,
+                       id_user: string | number | null,
                        username: string,
-                       level: string,
+                       level: number,
                        created_at: string,
                        updated_at: string
                    }
                }
 
-               if(data.user){
-                   return {
-                       message: data.message,
-                       token: data.token,
-                       ...data.user,
-                       id: data.user.id.toString()
-                   };
-               } else {
-                   return  null;
+
+
+               if(!data.user){
+                   return null;
                }
+
+                return {
+                    message: data.message,
+                    token: data.token,
+                    ...data.user,
+                    id: data.user.id ? data.user.id.toString() : "",
+                    user_id: data.user.id_user ? data.user.id_user : null
+                };
 
             },
         })
@@ -76,10 +84,13 @@ export const auth: NextAuthOptions = {
             return { ...token, ...user };
         },
         session({session, token, }){
-            session.user = token as any
+            if(token && session.user) {
+                session.user = token as any
+            }
             return session
         }
     },
+
 }
 
 export const getServerAuthSession = (ctx: {

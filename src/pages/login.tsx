@@ -27,20 +27,22 @@ const Login = () => {
     })
 
     const onSubmit = async({username, password}: LoginForm) => {
+        console.log(1)
         setIsLoading(true)
         const res = await signIn("credentials", {
             username,
             password,
-            redirect: false,
-            callbackUrl: "/admin-uks"
+            callbackUrl: "/authentication",
+            redirect: false
         })
+
 
         if(!res?.ok) {
             console.log(res?.error)
             return;
         }
 
-        await router.replace(`${res.url ?? ""}`)
+        await router.replace(`${res?.url ?? ""}`)
         setIsLoading(false)
     }
 
