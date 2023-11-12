@@ -37,8 +37,6 @@ export const auth: NextAuthOptions = {
                 }
             },
             async authorize(credentials) {
-                console.log("makan: ", credentials?.username)
-
                 const res = await Axios.post("/auth/login", {
                     username: credentials?.username,
                     password: credentials?.password
@@ -56,7 +54,7 @@ export const auth: NextAuthOptions = {
                    }
                }
 
-               if(data){
+               if(data.user){
                    return {
                        message: data.message,
                        token: data.token,

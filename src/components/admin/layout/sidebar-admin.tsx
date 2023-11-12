@@ -81,8 +81,7 @@ const SidebarAdmin = () => {
             collapsible
           >
             {linksDef.map((link, index) => (
-              <>
-                  <AccordionItem key={`navigation-${index}`} value={`navigation-${link.label}`} className="text-[#344054] text-sm border-none">
+              <AccordionItem key={`navigation-${index}`} value={`navigation-${link.label}`} className="text-[#344054] text-sm border-none">
                     <AccordionTrigger
                       asChild={!link.subItem}
                       onClick={() => setIsActive(index)}
@@ -115,8 +114,7 @@ const SidebarAdmin = () => {
                         className={cn("pl-12 cursor-pointer font-medium", !router.pathname)}
                       >
                         {link.subItem.map((sub_item, index) => (
-                          <>
-                            <div key={`sub-link-${sub_item.label}-index`} className="group relative">
+                            <div key={`sub-link-${sub_item.label}-${index}`} className="group relative">
                               <div className={cn(
                                 "absolute bottom-0 w-0 transition-all group-hover:w-full h-[0.03rem] bg-black/70",
                                 router.pathname.includes(sub_item.href) && "w-full"
@@ -134,13 +132,10 @@ const SidebarAdmin = () => {
                                 </div>
                               )}
                             </div>
-                          </>
-
                         ))}
                       </AccordionContent>
                     )}
                   </AccordionItem>
-              </>
             ))}
           </Accordion>
         </div>
