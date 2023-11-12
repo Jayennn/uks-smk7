@@ -58,7 +58,11 @@ const t = initTRPC.context<typeof createTRPCContext>().create({
         ...shape.data,
         zodError:
           error.code === 'BAD_REQUEST' && error.cause instanceof ZodError
-            ? error?.cause.flatten()
+            ? error.cause.flatten()
+            : null,
+        errZod:
+          error.code === "BAD_REQUEST" && error.cause instanceof ZodError
+            ? Object.values(error.cause.flatten().fieldErrors)?.[0]?.[0]
             : null,
       },
     };

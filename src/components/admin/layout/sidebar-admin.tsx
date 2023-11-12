@@ -1,4 +1,4 @@
-import {FileText, LayoutDashboard, type LucideIcon, Newspaper, UserCog, Users} from "lucide-react";
+import {FileText, LayoutDashboard, type LucideIcon, UserCog, Users} from "lucide-react";
 import {Accordion, AccordionContent, AccordionItem, AccordionTrigger} from "@/components/ui/accordion";
 import * as React from "react";
 import {useState} from "react";
@@ -70,7 +70,7 @@ const SidebarAdmin = () => {
 
   return (
     <>
-      <aside className="bg-[#FFFFFF] flex flex-col space-y-4 max-w-[280px] w-full border-r">
+      <aside className="hidden bg-[#FFFFFF] lg:flex flex-col space-y-4 max-w-[280px] w-full border-r">
         <div className="text-center py-4">
           <h1 className="text-[#222831] text-2xl font-semibold">UKS</h1>
         </div>
