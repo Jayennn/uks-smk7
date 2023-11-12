@@ -4,7 +4,7 @@ import {Input} from "@/components/ui/input";
 import {useForm} from "react-hook-form";
 import {LoginForm, loginSchema} from "@/server/api/routers/auth/schema";
 import {zodResolver} from "@hookform/resolvers/zod";
-import {signIn} from "next-auth/react";
+import {signIn, useSession} from "next-auth/react";
 import {useRouter} from "next/router";
 import {useState} from "react";
 import {Loader} from "lucide-react";
@@ -13,6 +13,8 @@ import {Loader} from "lucide-react";
 
 const Login = () => {
     const [isLoading, setIsLoading] = useState(false);
+    const {data: sesh} = useSession();
+
     const router = useRouter();
     const {
         register,
@@ -27,20 +29,27 @@ const Login = () => {
     })
 
     const onSubmit = async({username, password}: LoginForm) => {
+        console.log(1)
         setIsLoading(true)
         const res = await signIn("credentials", {
             username,
             password,
-            redirect: false,
-            callbackUrl: "/admin-uks"
+            redirect: false
         })
 
-        if(!res?.ok) {
+        if(!res?.ok && !sesh?.user.level) {
             console.log(res?.error)
             return;
         }
 
-        await router.replace(`${res.url ?? ""}`)
+        if(sesh?.user.level == 1){
+            await router.replace("/admin")
+        }
+
+        if(sesh?.user.level == 4){
+            console.log(sesh.user.level)
+            await router.replace("/")
+        }
         setIsLoading(false)
     }
 

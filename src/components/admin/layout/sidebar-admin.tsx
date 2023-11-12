@@ -1,7 +1,6 @@
 import {FileText, LayoutDashboard, type LucideIcon, UserCog, Users} from "lucide-react";
 import {Accordion, AccordionContent, AccordionItem, AccordionTrigger} from "@/components/ui/accordion";
 import * as React from "react";
-import {useState} from "react";
 import {ChevronDownIcon} from "@radix-ui/react-icons";
 import {cn} from "@/lib/utils";
 import {useRouter} from "next/router";
@@ -21,7 +20,7 @@ const linksDef: LinkTypes[] = [
   {
     icon: LayoutDashboard,
     label: "Dashboard",
-    href: "/admin-uks"
+    href: "/admin"
   },
   {
     icon: FileText,
@@ -29,7 +28,7 @@ const linksDef: LinkTypes[] = [
     subItem: [
       {
         label: "Opsi Rapor Kesehatan",
-        href: "/admin-uks/forms/option-forms"
+        href: "/admin/forms/option-forms"
       },
       {
         label: "Form Rapor Kesehatan",
@@ -40,12 +39,12 @@ const linksDef: LinkTypes[] = [
   {
     icon: Users,
     label:"Anggota UKS",
-    href: "/admin-uks/uks-member",
+    href: "/admin/uks-member",
   },
   {
     icon: UserCog,
     label: "Manage User",
-    href: "/admin-uks/manage-user",
+    href: "/admin/manage-user",
   },
   // {
   //   icon: Newspaper,
@@ -64,9 +63,7 @@ const linksDef: LinkTypes[] = [
 ]
 
 const SidebarAdmin = () => {
-  const [isActive, setIsActive] = useState<number>(0)
   const router = useRouter();
-  console.log(router.pathname)
 
   return (
     <>
@@ -84,10 +81,9 @@ const SidebarAdmin = () => {
               <AccordionItem key={`navigation-${index}`} value={`navigation-${link.label}`} className="text-[#344054] text-sm border-none">
                     <AccordionTrigger
                       asChild={!link.subItem}
-                      onClick={() => setIsActive(index)}
                       className={cn(
                         "transition-all px-4 py-3 hover:no-underline rounded-lg hover:bg-[#EEEEEE]",
-                        isActive === index && "bg-[#EEEEEE]/90"
+                        router.pathname === link.href && "bg-[#EEEEEE]/90"
                       )}>
                       {link?.href ? (
                         <Link href={link.href}>
@@ -111,7 +107,7 @@ const SidebarAdmin = () => {
                     </AccordionTrigger>
                     {link.subItem && (
                       <AccordionContent
-                        className={cn("pl-12 cursor-pointer font-medium", !router.pathname)}
+                        className={cn("pl-12 cursor-pointer font-medium")}
                       >
                         {link.subItem.map((sub_item, index) => (
                             <div key={`sub-link-${sub_item.label}-${index}`} className="group relative">

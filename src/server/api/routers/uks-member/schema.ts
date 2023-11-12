@@ -3,12 +3,20 @@ import {z} from "zod";
 export const uksMemberSchema = z.object({
   id: z.number(),
   nama: z.string().min(1, "The Nama field is required"),
-  jenis_kelamin: z.enum(["Laki-laki", "Perempuan"]),
+  jenis_kelamin: z.union([
+    z.enum(["Laki-laki", "Perempuan"], {
+      required_error: "The Jenis Kelamin field is required"
+    }),
+    z.string().min(1, "The Jenis Kelamin field is required")
+  ]),
   nisn: z.string().min(1, "The Nisn field is required"),
   kelas: z.string().min(1, "The Kelas field is required"),
   notelp: z.string().min(1, "The No. Telepon field is required"),
   alamat: z.string().min(1, "The Alamat field is required"),
-  status_aktif: z.enum(["0", "1", "2"]),
+  status_aktif: z.union([
+    z.enum(["0", "1", "2"]),
+    z.string()
+  ]),
   created_at: z.string(),
   updated_at: z.string()
 })
@@ -18,9 +26,8 @@ export const uksMemberFormSchema = uksMemberSchema.pick({
   nisn: true,
   kelas: true,
   notelp: true,
-  alamat: true
-}).extend({
-  jenis_kelamin: z.string().min(1, "The Jenis Kelamin field is required")
+  alamat: true,
+  jenis_kelamin: true
 })
 
 

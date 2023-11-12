@@ -1,6 +1,5 @@
 import {NextPageWithLayout} from "@/pages/_app";
 import {ReactElement} from "react";
-import LayoutAdmin from "@/components/admin/layout/layout-admin";
 import Layout from "@/components/admin/layout/layout-admin";
 
 const Page: NextPageWithLayout = () => {

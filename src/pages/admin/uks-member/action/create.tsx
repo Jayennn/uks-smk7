@@ -1,7 +1,3 @@
-import {NextPageWithLayout} from "@/pages/_app";
-import Head from "next/head";
-import {ReactElement} from "react";
-import LayoutAdmin from "@/components/admin/layout/layout-admin";
 import {useForm} from "react-hook-form";
 import {UksMemberForm, uksMemberFormSchema} from "@/server/api/routers/uks-member/schema";
 import {zodResolver} from "@hookform/resolvers/zod";
@@ -35,7 +31,6 @@ export const FormCreateMember = ({close}: {
       kelas: ""
     }
   })
-
   const isModal = close !== undefined
 
   const ctx = trpc.useUtils() // New Version useUtils
@@ -87,7 +82,7 @@ export const FormCreateMember = ({close}: {
           </div>
           <div className="flex flex-col gap-2">
             <Label>No. Telepon: </Label>
-            <Input {...register("notelp")} placeholder="0812********"/>
+            <Input type="number" {...register("notelp")} placeholder="0812********"/>
             {errors.notelp?.message && <p className="text-xs font-medium text-red-500">{errors.notelp?.message}</p>}
           </div>
           <div className="grid grid-cols-4 gap-2">
@@ -126,7 +121,7 @@ export const FormCreateMember = ({close}: {
   )
 }
 
-export const ModalCreateMember = ({...props}: DialogProps) => {
+const ModalCreateMember = ({...props}: DialogProps) => {
   return (
     <>
       <Dialog {...props}>
@@ -144,19 +139,4 @@ export const ModalCreateMember = ({...props}: DialogProps) => {
   )
 }
 
-const Page: NextPageWithLayout = () => {
-  return (
-    <>
-      <Head>
-        <title>Create Member - UKS</title>
-      </Head>
-      <h1>Tes</h1>
-    </>
-  )
-}
-
-Page.getLayout = function getLayout(page: ReactElement) {
-  return <LayoutAdmin>{page}</LayoutAdmin>
-}
-
-export default Page;
+export default ModalCreateMember;

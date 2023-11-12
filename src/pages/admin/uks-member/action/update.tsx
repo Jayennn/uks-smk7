@@ -11,16 +11,12 @@ import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from "@/c
 import {Button} from "@/components/ui/button";
 import {trpc} from "@/utils/trpc";
 import {useToast} from "@/components/ui/use-toast";
-import {NextPageWithLayout} from "@/pages/_app";
-import Head from "next/head";
-import {ReactElement} from "react";
-import LayoutAdmin from "@/components/admin/layout/layout-admin";
-
 interface UpdateMemberProps {
   id: number
+  close: ((open: boolean) => void) | undefined
 }
 
-const FormUpdateMember = ({id}: UpdateMemberProps) => {
+const FormUpdateMember = ({id, close}: UpdateMemberProps) => {
   const {toast} = useToast();
   const { data: session } = useSession()
   const ctx = trpc.useUtils() // New Version useUtils
@@ -46,14 +42,19 @@ const FormUpdateMember = ({id}: UpdateMemberProps) => {
     }
   })
 
+
+  const isModal = close !== undefined
+
   const updateMember = trpc.member.update.useMutation({
     onSuccess: async({message}) => {
       toast({
         title: "Message",
         description: message
       })
-
       await ctx.member.all.invalidate();
+      if (isModal) {
+        close(false)
+      }
     },
     onError: ({data, message}) => {
       toast({
@@ -104,7 +105,7 @@ const FormUpdateMember = ({id}: UpdateMemberProps) => {
             </div>
             <div className="col-span-2 flex flex-col gap-2">
               <Label>Jenis Kelamin: </Label>
-              <Select value={watch("jenis_kelamin")} onValueChange={(value: any) => setValue("jenis_kelamin", value)}>
+              <Select value={watch("jenis_kelamin")} onValueChange={(value: string) => setValue("jenis_kelamin", value)}>
                 <SelectTrigger>
                   <SelectValue placeholder="Jenis Kelamin"/>
                 </SelectTrigger>
@@ -118,17 +119,21 @@ const FormUpdateMember = ({id}: UpdateMemberProps) => {
             </div>
           </div>
         </div>
-        <div className="flex justify-between gap-2">
-          <Button disabled={updateMember.isLoading} type="submit">
-            Edit
-          </Button>
-        </div>
+          <div className="flex justify-end gap-2">
+            <Button
+              disabled={updateMember.isLoading}
+              variant="ghost"
+              type="button"
+              onClick={() => close ? close(false) : null}
+            >Close</Button>
+            <Button disabled={updateMember.isLoading}>Edit</Button>
+          </div>
       </form>
     </>
   )
 }
 
-export const ModalUpdateMember = ({...props}: DialogProps & {
+const ModalUpdateMember = ({...props}: DialogProps & {
   id: number
 }) => {
   return (
@@ -142,6 +147,7 @@ export const ModalUpdateMember = ({...props}: DialogProps & {
             </DialogDescription>
           </DialogHeader>
           <FormUpdateMember
+            close={props.onOpenChange}
             id={props.id}
           />
         </DialogContent>
@@ -150,19 +156,4 @@ export const ModalUpdateMember = ({...props}: DialogProps & {
   )
 }
 
-const Page: NextPageWithLayout = () => {
-  return (
-    <>
-      <Head>
-        <title>Create Member - UKS</title>
-      </Head>
-      <h1>Tes</h1>
-    </>
-  )
-}
-
-Page.getLayout = function getLayout(page: ReactElement) {
-  return <LayoutAdmin>{page}</LayoutAdmin>
-}
-
-export default Page;
+export default ModalUpdateMember;

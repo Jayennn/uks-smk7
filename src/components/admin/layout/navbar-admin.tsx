@@ -1,7 +1,6 @@
-import {Input} from "@/components/ui/input";
 import {Search} from "lucide-react";
 import {cn} from "@/lib/utils";
-import {Avatar, AvatarFallback} from "@/components/ui/avatar";
+import DropdownAvatar from "@/components/admin/dropdown-avatar";
 
 const NavbarAdmin = () => {
   return (
@@ -16,11 +15,7 @@ const NavbarAdmin = () => {
               type="text"
             />
           </div>
-          <Avatar>
-            <AvatarFallback className="bg-[#F9FAFB]">
-              AD
-            </AvatarFallback>
-          </Avatar>
+          <DropdownAvatar />
         </div>
       </nav>
     </>
