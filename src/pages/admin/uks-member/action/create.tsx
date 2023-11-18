@@ -33,17 +33,17 @@ export const FormCreateMember = ({close}: {
   })
   const isModal = close !== undefined
 
-  const ctx = trpc.useUtils() // New Version useUtils
+  const ctx = trpc.useContext() // New Version useUtils
   const create_member = trpc.member.create.useMutation({
     onSuccess: async ({message}) => {
       toast({
         title: "Message",
         description: message
       })
-      await ctx.member.all.invalidate();
       if (isModal) {
         close(false)
       }
+      await ctx.member.all.invalidate();
     },
     onError: ({data, message}) => {
 
