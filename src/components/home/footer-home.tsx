@@ -8,7 +8,7 @@ const FooterHome = () => {
     <>
       <footer className="pt-28">
         <div className="container">
-          <div className="flex justify-around gap-4">
+          <div className="flex flex-col lg:flex-row justify-around gap-4">
             <div className="max-w-[22rem] flex items-center gap-3 h-fit">
               <div className="">
                 <Image
@@ -21,7 +21,7 @@ const FooterHome = () => {
               </div>
               <h1 className="text-3xl text-[#1D2739] font-semibold">SMK Negeri 7 Samarinda</h1>
             </div>
-            <Separator orientation="vertical" className="w-[2px] rounded-md bg-[#1D2739] h-auto"/>
+            <Separator orientation="vertical" className="w-full h-[1px] lg:w-[2px] lg:h-auto rounded-md bg-[#1D2739]"/>
             <div className="px-6 flex flex-col">
               <h5 className="text-lg font-semibold uppercase">Link Terkait</h5>
               <ul className="pt-8 font-medium space-y-3">
@@ -30,8 +30,8 @@ const FooterHome = () => {
                 <li>LSP P1 SMK Negeri 7 Samarinda</li>
               </ul>
             </div>
-            <Separator orientation="vertical" className="w-[2px] rounded-md bg-[#1D2739] h-auto"/>
-            <div className="max-w-sm px-6 flex flex-col">
+            <Separator orientation="vertical" className="w-full h-[1px] lg:w-[2px] lg:h-auto rounded-md bg-[#1D2739]"/>
+            <div className="w-full md:max-w-sm px-6 flex flex-col">
               <h5 className="text-lg font-semibold uppercase">Alamat</h5>
               <ul className="pt-8 font-medium space-y-3">
                 <li className="max-w-sm">Jl. Aminah Syukur No 82, Samarinda Kalimantan Timur</li>
@@ -42,9 +42,9 @@ const FooterHome = () => {
             </div>
           </div>
           <Separator className="my-8 h-[2px]" orientation="horizontal"/>
-          <div className="pb-8 flex items-center justify-between">
+          <div className="pb-8 flex flex-col items-center justify-between">
             <p className="font-medium">Copyright &copy; PPLG_2021 | ALL RIGHTS RESERVED</p>
-            <div className="flex items-center gap-4 text-sm font-medium">
+            <div className="mt-8 flex flex-col items-start lg:items-center gap-4 text-sm font-medium">
               <Link href="#" className="inline-flex space-x-2">
                 <Instagram size={21}/>
                 <p>lsp_p1_smkn7smd</p>

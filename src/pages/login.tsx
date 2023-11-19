@@ -29,11 +29,11 @@ const Login = () => {
     })
 
     const onSubmit = async({username, password}: LoginForm) => {
-        console.log(1)
         setIsLoading(true)
         const res = await signIn("credentials", {
             username,
             password,
+            callbackUrl: "/authentication",
             redirect: false
         })
 
@@ -42,14 +42,7 @@ const Login = () => {
             return;
         }
 
-        if(sesh?.user.level == 1){
-            await router.replace("/admin")
-        }
-
-        if(sesh?.user.level == 4){
-            console.log(sesh.user.level)
-            await router.replace("/")
-        }
+        await router.replace(`${res?.url ?? "/"}`)
         setIsLoading(false)
     }
 

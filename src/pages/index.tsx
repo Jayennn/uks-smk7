@@ -4,10 +4,11 @@ import {ReactElement} from "react";
 import Image from "next/image";
 import Link from "next/link";
 import {Button} from "@/components/ui/button";
-import {ClipboardList, KeyRound} from "lucide-react";
+import {ClipboardList, FileText, KeyRound} from "lucide-react";
 import {useSession} from "next-auth/react";
 const Page: NextPageWithLayout = () => {
   const {data: session} = useSession();
+  console.log(session?.user)
   return (
     <>
       <section className="container relative flex items-center max-h-full h-[42rem]">
@@ -20,7 +21,7 @@ const Page: NextPageWithLayout = () => {
             {" "}
             Samarinda
           </h1>
-          <div className="mt-8 flex items-center justify-evenly gap-3">
+          <div className="mt-8 grid grid-cols-2 md:grid-cols-4 gap-3">
             <Image
               width={100}
               height={100}
@@ -51,15 +52,15 @@ const Page: NextPageWithLayout = () => {
           quality={100}
           width={750}
           height={750}
-          className="absolute right-0 top-0"
+          className="hidden lg:block absolute right-0 top-0"
           src="/right.png"
           alt="uks-banner"
         />
 
       </section>
       <section className="py-28">
-        <div className="h-full container px-16 flex items-center justify-between">
-          <div className="flex flex-col justify-center max-w-sm">
+        <div className="h-full container lg:px-16 flex flex-col lg:flex-row lg:items-center justify-between">
+          <div className="flex flex-col  justify-center max-w-sm">
             <div className="grid gap-3">
               <h1 className="text-5xl text-[#1D2739] font-bold">Rapor Kesehatanku</h1>
               <p className="max-w-[18rem] text-lg text-[#475367]">Buku catatan kesehatan tingkat SMP/MTS dan SMK/MA</p>
@@ -67,19 +68,29 @@ const Page: NextPageWithLayout = () => {
 
             <Button asChild size="lg" className="mt-8 bg-[#00CC52] hover:bg-[#00CC52]/90 text-white px-4 py-1.5 h-10 w-fit rounded-md">
               <Link href={session?.user ? "#" : "/login"}>
-                <KeyRound size={18} className="mr-2"/>
-                {session?.user ? "Isi Rapor" : "Login untuk mengisi"}
+                {session?.user ? (
+                  <>
+                    <FileText size={18} className="mr-2"/>
+                    Isi Rapor
+                  </>
+                ) : (
+                  <>
+                    <KeyRound size={18} className="mr-2"/>
+                    Login untuk mengisi
+                  </>
+                )}
               </Link>
             </Button>
           </div>
-          <div className="h-full w-full flex items-center justify-end">
+          <div className="pt-[10rem] lg:pt-0 h-full w-full flex items-center justify-center lg:justify-end">
             <div className="relative flex justify-center items-center">
-              <div className="bg-[#0D9247] w-[26rem] h-[20rem] rounded-[50px] rotate-[35deg] drop-shadow-2xl"/>
+              <div className="bg-[#0D9247] w-[18rem] h-[19rem] md:w-[26rem] md:h-[20rem]
+               rounded-[50px] rotate-[35deg] drop-shadow-2xl"/>
               <Image
                 quality={100}
                 width={350}
                 height={340}
-                className="absolute object-contain"
+                className="w-[18rem] h-[20rem] md:w-[22rem] md:h-[24rem] absolute object-contain"
                 src="/rapor-kesehatan.png"
                 alt="rapor-kesehatan"
               />
@@ -96,7 +107,7 @@ const Page: NextPageWithLayout = () => {
             {" "}
             Misi
           </h1>
-          <div className="max-w-4xl flex flex-col text-lg gap-4 text-[#475367]">
+          <div className="max-w-4xl flex flex-col text-base md:text-lg gap-4 text-[#475367]">
             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer ullamcorper feugiat tellus, a finibus libero facilisis at. Sed fermentum justo ac sem commodo, sit amet molestie sem facilisis. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer ullamcorper feugiat tellus, a finibus libero facilisis at. Sed fermentum justo ac sem commodo, sit amet molestie sem facilisis. </p>
             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer ullamcorper feugiat tellus, a finibus libero facilisis at. Sed fermentum justo ac sem commodo, sit amet molestie sem facilisis. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer ullamcorper feugiat tellus, a finibus libero facilisis at. Sed fermentum justo ac sem commodo, sit amet molestie sem facilisis. </p>
           </div>
@@ -104,7 +115,7 @@ const Page: NextPageWithLayout = () => {
       </section>
       <section className="py-28 bg-[#F5F5FF]">
         <div className="container flex items-center justify-center">
-          <div className="max-w-5xl flex items-center gap-12">
+          <div className="max-w-5xl flex flex-col md:flex-row  items-center gap-12">
             <Image
               width={250}
               height={250}
