@@ -42,9 +42,9 @@ const FooterHome = () => {
             </div>
           </div>
           <Separator className="my-8 h-[2px]" orientation="horizontal"/>
-          <div className="pb-8 flex flex-col items-center justify-between">
+          <div className="pb-8 flex flex-col md:flex-row items-center justify-between">
             <p className="font-medium">Copyright &copy; PPLG_2021 | ALL RIGHTS RESERVED</p>
-            <div className="mt-8 flex flex-col items-start lg:items-center gap-4 text-sm font-medium">
+            <div className="mt-8 md:mt-0 flex flex-col md:flex-row items-start md:items-center gap-4 text-sm font-medium">
               <Link href="#" className="inline-flex space-x-2">
                 <Instagram size={21}/>
                 <p>lsp_p1_smkn7smd</p>

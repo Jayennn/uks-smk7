@@ -33,8 +33,8 @@ export const FormCreateMember = ({close}: {
   })
   const isModal = close !== undefined
 
-  const ctx = trpc.useContext() // New Version useUtils
-  const create_member = trpc.member.create.useMutation({
+  const ctx = trpc.useUtils() // New Version useUtils
+  const createMember = trpc.member.create.useMutation({
     onSuccess: async ({message}) => {
       toast({
         title: "Message",
@@ -58,7 +58,7 @@ export const FormCreateMember = ({close}: {
 
 
   const onSubmit = async (data: UksMemberForm) => {
-    await create_member.mutateAsync(data)
+    await createMember.mutateAsync(data)
   }
   return (
     <>
@@ -109,12 +109,12 @@ export const FormCreateMember = ({close}: {
         </div>
         <div className="flex justify-end gap-2">
           <Button
-            disabled={create_member.isLoading}
+            disabled={createMember.isLoading}
             variant="ghost"
             type="button"
             onClick={() => close ? close(false) : null}
           >Close</Button>
-          <Button disabled={create_member.isLoading}>Tambah</Button>
+          <Button disabled={createMember.isLoading}>Tambah</Button>
         </div>
       </form>
     </>

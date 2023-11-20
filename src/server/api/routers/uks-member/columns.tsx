@@ -10,7 +10,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger
 } from "@/components/ui/dropdown-menu";
-import {Loader, MoreVertical} from "lucide-react";
+import {Loader, MoreHorizontal} from "lucide-react";
 import {useToast} from "@/components/ui/use-toast";
 import {useState} from "react";
 import ModalDeleteMember from "@/pages/admin/uks-member/action/delete";
@@ -94,7 +94,7 @@ const Action = ({row}: CellContext<UksMember, unknown>) => {
           {deleteMember.isLoading ?
             <Loader  size={18} className="animate-spin"/>
             :
-            <MoreVertical size={18}/>
+            <MoreHorizontal size={18}/>
           }
         </DropdownMenuTrigger>
         <DropdownMenuContent className="font-inter" align="end">

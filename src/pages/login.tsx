@@ -7,7 +7,8 @@ import {zodResolver} from "@hookform/resolvers/zod";
 import {signIn, useSession} from "next-auth/react";
 import {useRouter} from "next/router";
 import {useState} from "react";
-import {Loader} from "lucide-react";
+import {Loader, LogIn} from "lucide-react";
+import {cn} from "@/lib/utils";
 
 
 
@@ -76,8 +77,18 @@ const Login = () => {
                           />
                           <p className="text-xs text-red-500 font-medium">{errors?.password?.message ?? ""}</p>
                       </div>
-                      <Button>
-                          {isLoading ? <Loader className="animate-spin"/> : "Login"}
+                      <Button className={cn(isLoading && "text-muted-foreground")}>
+                          {isLoading ? (
+                            <>
+                                <Loader size={18} className="mr-2 animate-spin"/>
+                                Processing...
+                            </>
+                          ) : (
+                            <>
+                                <LogIn size={18} className="mr-2"/>
+                                Login
+                            </>
+                          )}
                       </Button>
                   </div>
               </form>

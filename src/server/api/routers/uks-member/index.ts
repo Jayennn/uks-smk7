@@ -34,7 +34,6 @@ export const uksMemberRouter = createTRPCRouter({
       const conf = authToken(ctx.token)
       const res = await Axios.post("/admin/anggota", input, conf)
 
-      console.log(res)
       return res.data as {
         message: string,
         anggota: UksMember

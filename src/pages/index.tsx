@@ -13,15 +13,15 @@ const Page: NextPageWithLayout = () => {
     <>
       <section className="container relative flex items-center max-h-full h-[42rem]">
         <div className="max-w-xl relative flex flex-col">
-          <h1 className="text-5xl font-bold text-[#1D2739] md:leading-[3.5rem]">
+          <h1 className="text-5xl font-bold text-[#1D2739]  md:leading-[3.5rem]">
             Usaha Kesehatan Sekolah{" "}
-            <span className="text-green-500">
+            <span className="inline-block text-green-500">
               SMK NEGERI 7
             </span>
             {" "}
             Samarinda
           </h1>
-          <div className="mt-8 grid grid-cols-2 md:grid-cols-4 gap-3">
+          <div className="mt-8 grid grid-cols-2 justify-items-center md:grid-cols-4 gap-3">
             <Image
               width={100}
               height={100}
@@ -123,7 +123,10 @@ const Page: NextPageWithLayout = () => {
               alt="hi five image "
             />
             <div className="flex flex-col space-y-4">
-              <h1 className="uppercase text-[#1D2739] text-4xl md:leading-[2.5rem] font-bold">Join Komunitas UKS. Bersama Ciptakan Sekolah Sehat!</h1>
+              <h1 className="uppercase text-[#1D2739] text-4xl md:leading-[2.5rem] font-bold">
+                Join Komunitas UKS.
+                <br/> Bersama Ciptakan Sekolah Sehat!
+              </h1>
               <p className="text-base text-[#475367]">Bersama Komunitas UKS, kita bisa lebih peduli dan memberikan perhatian khusus pada kesehatan di sekolah. Ayo, bergabunglah dan berikan kontribusimu!</p>
               <Button asChild variant="outline" size="lg" className="w-fit bg-white">
                 <Link href={session?.user ? "/daftar-anggota-uks" : "/login"}>

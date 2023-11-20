@@ -13,7 +13,6 @@ const Page: NextPageWithLayout = () => {
   const [create, setCreate] = useState<boolean>(false);
   const {data: member, isLoading} = trpc.member.all.useQuery()
 
-  console.log(member?.anggotas)
   const table = useReactTable({
     data: member?.anggotas ?? [],
     columns,
