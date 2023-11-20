@@ -39,7 +39,7 @@ const Page: NextPageWithLayout = () => {
       nama: session?.user.nama ?? "",
       nisn: session?.user.username ?? ""
     })
-  }, []);
+  }, [session]);
 
   const ctx = trpc.useUtils();
   const create_member = trpc.member.createInStudent.useMutation({
@@ -64,7 +64,6 @@ const Page: NextPageWithLayout = () => {
     await create_member.mutateAsync(data)
   }
 
-  console.log(errors)
   return (
     <>
       <section className="py-28">
@@ -78,7 +77,6 @@ const Page: NextPageWithLayout = () => {
                   {...register("nama")}
                   id="name"
                   placeholder="John Doe"
-                  value={ session?.user.nama }
                   disabled={!!session?.user.nama}
                 />
                 {errors.nama?.message && <p className="text-xs font-medium text-red-500">{errors.nama?.message}</p>}
