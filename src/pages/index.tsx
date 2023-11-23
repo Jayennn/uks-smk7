@@ -129,7 +129,7 @@ const Page: NextPageWithLayout = () => {
               </h1>
               <p className="text-base text-[#475367]">Bersama Komunitas UKS, kita bisa lebih peduli dan memberikan perhatian khusus pada kesehatan di sekolah. Ayo, bergabunglah dan berikan kontribusimu!</p>
               <Button asChild variant="outline" size="lg" className="w-fit bg-white">
-                <Link href={session?.user ? "/daftar-anggota-uks" : "/login"}>
+                <Link href={session?.user ? "/registration-uks" : "/login"}>
                   {session?.user ? (
                       <>
                         <ClipboardList size={18} className="mr-2"/>

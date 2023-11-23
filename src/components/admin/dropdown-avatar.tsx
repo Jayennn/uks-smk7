@@ -22,6 +22,7 @@ const DropdownAvatar = () => {
         title: "Success",
         description: message
       })
+      localStorage.clear()
     },
     onError: ({ data, message }) => {
       toast({

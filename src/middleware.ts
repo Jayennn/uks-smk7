@@ -4,7 +4,6 @@ import {getToken} from "next-auth/jwt";
 
 export default withAuth(
   async function middleware(req,){
-    console.log(1)
     const token = await getToken({req});
     const isAuthenticated = !!token
     const url = req.nextUrl.clone()

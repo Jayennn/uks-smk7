@@ -13,9 +13,9 @@ import {
 import {Loader, MoreHorizontal} from "lucide-react";
 import {useToast} from "@/components/ui/use-toast";
 import {useState} from "react";
-import ModalDeleteMember from "@/pages/admin/uks-member/action/delete";
-import ModalUpdateMember from "@/pages/admin/uks-member/action/update";
-import ModalDetailMember from "@/pages/admin/uks-member/action/detail";
+import ModalDeleteMember from "@/pages/admin/department-members/action/delete";
+import ModalUpdateMember from "@/pages/admin/department-members/action/update";
+import ModalDetailMember from "@/pages/admin/department-members/action/detail";
 
 
 

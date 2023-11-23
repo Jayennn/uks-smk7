@@ -30,6 +30,7 @@
     "@trpc/next": "^10.43.2",
     "@trpc/react-query": "^10.43.2",
     "@trpc/server": "^10.43.2",
+    "@uidotdev/usehooks": "^2.4.1",
     "axios": "^1.6.0",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.0.0",

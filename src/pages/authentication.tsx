@@ -14,7 +14,6 @@ export const getServerSideProps: GetServerSideProps = async({req}) => {
   const token = await getToken({req});
   const isAuthenticated = !!token;
 
-  console.log(token)
   if(!isAuthenticated) {
     return {
       redirect: {
