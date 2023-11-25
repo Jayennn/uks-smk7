@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "node server.js",
     "build": "next build",
     "prod_start": "NODE_ENV=production node server.js",
     "start": "next start",
@@ -40,6 +40,7 @@
     "moment": "^2.29.4",
     "next": "14.0.1",
     "next-auth": "^4.24.4",
+    "nextjs-progressbar": "^0.0.16",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.47.0",
