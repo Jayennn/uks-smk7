@@ -37,7 +37,7 @@ const Page: NextPageWithLayout = () => {
       <div className="bg-white p-4 rounded-md shadow-md border">
         <div className="flex flex-col space-y-4">
           <div className="flex items-center justify-between">
-            <h1 className="text-2xl font-semibold">Anggota UKS</h1>
+            <h1 className="text-2xl text-[#1D2739] font-semibold">Anggota UKS</h1>
             <Button
               onClick={() => setCreate(true)}
               size="sm"

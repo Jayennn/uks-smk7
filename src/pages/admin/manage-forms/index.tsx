@@ -5,8 +5,13 @@ import Layout from "@/components/admin/layout/layout-admin";
 const Page: NextPageWithLayout = () => {
   return (
     <>
-      <div>
-        <h1 className="text-lg font-semibold">Hello world</h1>
+      <div className="bg-white p-4 rounded-md shadow-md border h-screen">
+        <div className="flex flex-col space-y-4">
+          <h1 className="text-2xl text-[#1D2739] font-semibold">Manage Forms</h1>
+          <div className="grid grid-cols-3 gap-3">
+          {/*  TODO: FORM CARDS */}
+          </div>
+        </div>
       </div>
     </>
   )

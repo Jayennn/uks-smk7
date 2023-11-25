@@ -8,7 +8,7 @@ import {useSession} from "next-auth/react";
 import {DialogProps} from "@radix-ui/react-dialog";
 import {Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle} from "@/components/ui/dialog";
 import {Button} from "@/components/ui/button";
-import {Loader, Pencil} from "lucide-react";
+import {Loader, Pencil, PenSquare} from "lucide-react";
 import {Skeleton} from "@/components/ui/skeleton";
 import {trpc} from "@/utils/trpc";
 import {useToast} from "@/components/ui/use-toast";
@@ -106,7 +106,7 @@ const FormUpdateSection = ({id, close}: UpdateSectionProps) => {
               </>
             ): (
               <>
-                <Pencil size={18} className="mr-2"/>
+                <PenSquare size={18} className="mr-2"/>
                 Edit
               </>
             )}

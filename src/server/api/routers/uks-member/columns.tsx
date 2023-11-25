@@ -5,7 +5,9 @@ import {dated} from "@/lib/utils";
 import {trpc} from "@/utils/trpc";
 import {
   DropdownMenu,
-  DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger
@@ -154,14 +156,36 @@ export const columns: ColumnDef<UksMember>[] = [
     accessorKey: "status_aktif",
     header: "Status",
     cell: ({row}) => {
-      const {status_aktif} = row.original;
-      if(status_aktif === "0") {
-        return <Badge variant="outline">Menunggu</Badge>
-      } else if(status_aktif === "1"){
-        return <Badge variant="destructive">Tolak</Badge>
-      } else if(status_aktif === "2"){
-        return <Badge variant="secondary">terima</Badge>
-      }
+      const { status_aktif } = row.original;
+      return (
+        <>
+          <DropdownMenu>
+            <DropdownMenuTrigger>
+              {/*{*/}
+
+              {/*  const {status_aktif} = row.original;*/}
+              {/*  if(status_aktif === "0") {*/}
+              {/*  return <Badge variant="outline">Menunggu</Badge>*/}
+              {/*} else if(status_aktif === "1"){*/}
+              {/*  return <Badge variant="destructive">Tolak</Badge>*/}
+              {/*} else if(status_aktif === "2"){*/}
+              {/*  return <Badge variant="secondary">terima</Badge>*/}
+              {/*}*/}
+              {/*}*/}
+              <Badge variant="outline">
+                {status_aktif === "0" ? "Menunggu" : status_aktif === "1" ? "Tolak" : status_aktif === "2" ? "Terima" : ""}
+              </Badge>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent onChange={(e) => console.log(e.currentTarget)}>
+              <DropdownMenuLabel>Status</DropdownMenuLabel>
+              <DropdownMenuSeparator/>
+              <DropdownMenuItem>Menunggu</DropdownMenuItem>
+              <DropdownMenuItem>Tolak</DropdownMenuItem>
+              <DropdownMenuItem>Terima</DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        </>
+      )
     }
   },
   {

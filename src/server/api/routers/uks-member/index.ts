@@ -43,7 +43,6 @@ export const uksMemberRouter = createTRPCRouter({
     .input(uksMemberFormSchema)
     .mutation(async ({ctx, input}) => {
       const conf = authToken(ctx.token)
-      console.log(conf)
       const res = await Axios.post("siswa/anggota/daftar", input, conf)
       return res.data as {
         message: string,

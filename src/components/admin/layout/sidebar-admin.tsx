@@ -33,6 +33,10 @@ const linksDef: LinkTypes[] = [
         href: "/admin/manage-forms/section-forms"
       },
       {
+        label: "Sub-Bagian Form Kesehatan",
+        href: "/admin/manage-forms/sub-section-forms"
+      },
+      {
         label: "Opsi Rapor Kesehatan",
         href: "/admin/manage-forms/option-forms"
       },
@@ -60,7 +64,7 @@ const SidebarAdmin = () => {
 
   return (
     <>
-      <aside className=" bg-[#FFFFFF] flex flex-col space-y-4 max-w-[280px] w-full border-r">
+      <aside className="h-screen fixed top-0 left-0 bg-[#FFFFFF] flex flex-col space-y-4 max-w-[280px] w-full border-r">
         <div className="text-center py-4">
           <h1 className="text-[#222831] text-2xl font-semibold">UKS</h1>
         </div>

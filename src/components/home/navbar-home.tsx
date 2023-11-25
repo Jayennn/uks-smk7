@@ -1,9 +1,32 @@
 import Image from "next/image";
 import Link from "next/link";
-import {useSession} from "next-auth/react";
+import {signOut, useSession} from "next-auth/react";
+import {Button} from "@/components/ui/button";
+import {trpc} from "@/utils/trpc";
+import {useToast} from "@/components/ui/use-toast";
+import {LogOut} from "lucide-react";
 
 const NavbarHome = () => {
+  const {toast} = useToast();
   const {data: session} = useSession();
+
+  const logout = trpc.auth.logout.useMutation({
+    onSuccess: ({ message }) => {
+      toast({
+        title: "Success",
+        description: message
+      })
+      localStorage.clear()
+    },
+    onError: ({ data, message }) => {
+      toast({
+        title: "Error",
+        description: data?.errZod ?? message,
+        variant: "destructive"
+
+      })
+    },
+  })
   return (
     <>
       <nav className="sticky top-0 z-20 bg-white shadow-md w-full">
@@ -14,11 +37,19 @@ const NavbarHome = () => {
               Beranda
             </Link>
             {session?.user ? (
-              <p>{session.user.nama ?? session.user.username}</p>
+              <Button className="text-sm border-green-500" size="sm" variant="outline" onClick={async () => {
+                await logout.mutateAsync();
+                await signOut({ callbackUrl: "/login" });
+              }}>
+                <LogOut size={16} className="mr-2"/>
+                Logout
+              </Button>
             ) : (
-              <Link  href="/login" className="rounded-md flex items-center h-9 px-4 py-2 border-[2px] border-[#00CC52]">
-                Login
-              </Link>
+              <Button asChild size="sm" variant="outline" className="text-sm border-green-500">
+                <Link  href="/login">
+                  Login
+                </Link>
+              </Button>
             )}
           </div>
         </div>

@@ -8,6 +8,7 @@ import {NextPage} from "next";
 import {trpc} from "@/utils/trpc";
 import { Toaster } from "@/components/ui/toaster"
 import {poppins} from "@/lib/font";
+import NProgress from "nextjs-progressbar";
 
 export type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
     getLayout?: (page: ReactElement) => ReactNode
@@ -24,6 +25,7 @@ const MyApp = ({
     return (
         <>
                 <SessionProvider session={session}>
+                    <NProgress color="#000000"/>
                     <main className={cn(
                         poppins.variable,
                         "min-h-screen bg-background font-poppins antialiased"
