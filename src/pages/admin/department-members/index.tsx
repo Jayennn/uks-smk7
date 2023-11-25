@@ -7,11 +7,7 @@ import {trpc} from "@/utils/trpc";
 import {columns} from "@/server/api/routers/uks-member/columns"
 import DataTableFilter from "@/components/table/data-table-filter";
 import {Button} from "@/components/ui/button";
-<<<<<<<< HEAD:src/pages/admin/uks-member/index.tsx
-import ModalCreateMember from "@/pages/admin/uks-member/action/create";
-========
 import ModalCreateMember from "@/pages/admin/department-members/action/create";
->>>>>>>> 34cf44a4eb89a38e669c7cac7519f408ccaf04b4:src/pages/admin/department-members/index.tsx
 const Page: NextPageWithLayout = () => {
   const [columnFilters, setColumnFilter] = useState<ColumnFiltersState>([])
   const [create, setCreate] = useState<boolean>(false);

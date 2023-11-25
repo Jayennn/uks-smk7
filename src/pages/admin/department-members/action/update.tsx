@@ -11,11 +11,9 @@ import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from "@/c
 import {Button} from "@/components/ui/button";
 import {trpc} from "@/utils/trpc";
 import {useToast} from "@/components/ui/use-toast";
-<<<<<<<< HEAD:src/pages/admin/uks-member/action/update.tsx
-========
 import {Skeleton} from "@/components/ui/skeleton";
 import {Loader, Pencil} from "lucide-react";
->>>>>>>> 34cf44a4eb89a38e669c7cac7519f408ccaf04b4:src/pages/admin/department-members/action/update.tsx
+
 interface UpdateMemberProps {
   id: number
   close: ((open: boolean) => void) | undefined
@@ -131,17 +129,7 @@ const FormUpdateMember = ({id, close}: UpdateMemberProps) => {
             </div>
             <div className="col-span-2 flex flex-col gap-2">
               <Label>Jenis Kelamin: </Label>
-<<<<<<<< HEAD:src/pages/admin/uks-member/action/update.tsx
-              <Select value={watch("jenis_kelamin")} onValueChange={(value: string) => setValue("jenis_kelamin", value)}>
-                <SelectTrigger>
-                  <SelectValue placeholder="Jenis Kelamin"/>
-                </SelectTrigger>
-                <SelectContent className="font-inter">
-                  <SelectItem value="Laki-laki">Laki-laki</SelectItem>
-                  <SelectItem value="Perempuan">Perempuan</SelectItem>
-                </SelectContent>
-              </Select>
-========
+
               {!getValues("jenis_kelamin") ? (
                 <Skeleton className="h-9 w-full"/>
               ) : (
@@ -161,7 +149,6 @@ const FormUpdateMember = ({id, close}: UpdateMemberProps) => {
                   control={control}
                 />
               )}
->>>>>>>> 34cf44a4eb89a38e669c7cac7519f408ccaf04b4:src/pages/admin/department-members/action/update.tsx
               {errors.jenis_kelamin?.message &&
                   <p className="text-xs font-medium text-red-500">{errors.jenis_kelamin?.message}</p>}
             </div>
@@ -174,9 +161,6 @@ const FormUpdateMember = ({id, close}: UpdateMemberProps) => {
               type="button"
               onClick={() => close ? close(false) : null}
             >Close</Button>
-<<<<<<<< HEAD:src/pages/admin/uks-member/action/update.tsx
-            <Button disabled={updateMember.isLoading}>Edit</Button>
-========
             <Button disabled={updateMember.isLoading}>
               {updateMember.isLoading ? (
                 <>
@@ -190,7 +174,6 @@ const FormUpdateMember = ({id, close}: UpdateMemberProps) => {
                 </>
               )}
             </Button>
->>>>>>>> 34cf44a4eb89a38e669c7cac7519f408ccaf04b4:src/pages/admin/department-members/action/update.tsx
           </div>
       </form>
     </>

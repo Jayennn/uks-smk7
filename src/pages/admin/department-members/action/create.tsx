@@ -33,13 +33,9 @@ export const FormCreateMember = ({close}: {
   })
   const isModal = close !== undefined
 
-<<<<<<<< HEAD:src/pages/admin/uks-member/action/create.tsx
-  const ctx = trpc.useContext() // New Version useUtils
-  const create_member = trpc.member.create.useMutation({
-========
+
   const ctx = trpc.useUtils() // New Version useUtils
   const createMember = trpc.member.create.useMutation({
->>>>>>>> 34cf44a4eb89a38e669c7cac7519f408ccaf04b4:src/pages/admin/department-members/action/create.tsx
     onSuccess: async ({message}) => {
       toast({
         title: "Message",
