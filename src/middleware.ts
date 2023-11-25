@@ -6,13 +6,16 @@ export default withAuth(
   async function middleware(req,){
     const token = await getToken({req});
     const isAuthenticated = !!token
+    const url = req.nextUrl.clone()
 
-    if (isAuthenticated && token?.level === 4) {
-      return NextResponse.redirect("/");
+    if(!isAuthenticated) {
+      return NextResponse.redirect(new URL("/login"))
     }
 
-    if (req.nextUrl.pathname === "/admin" && req.nextauth.token?.level != 1) {
-      return new NextResponse("You are not authorized");
+    if (req.nextUrl.pathname.startsWith("/admin") && req.nextauth.token?.level != 1) {
+      url.pathname = "/login"
+      // @ts-ignore
+      return NextResponse.redirect(url, req.url as string)
     }
   },
   {

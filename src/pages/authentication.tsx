@@ -1,5 +1,5 @@
-import {getToken} from "next-auth/jwt";
 import {GetServerSideProps} from "next";
+import {getToken} from "next-auth/jwt";
 
 const Authentication = () => {
   return (
@@ -14,7 +14,6 @@ export const getServerSideProps: GetServerSideProps = async({req}) => {
   const token = await getToken({req});
   const isAuthenticated = !!token;
 
-  console.log(token)
   if(!isAuthenticated) {
     return {
       redirect: {

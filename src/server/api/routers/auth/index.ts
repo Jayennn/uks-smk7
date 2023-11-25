@@ -12,7 +12,7 @@ export const authRouter = createTRPCRouter({
     logout: protectedProcedure
       .mutation(async({ctx}) => {
           const conf = authToken(ctx.token)
-          const res = await Axios.post("/auth/login", undefined, conf)
+          const res = await Axios.post("/auth/logout", undefined, conf)
           return res.data as {
             message: string
           }

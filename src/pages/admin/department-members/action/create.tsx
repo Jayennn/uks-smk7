@@ -33,17 +33,22 @@ export const FormCreateMember = ({close}: {
   })
   const isModal = close !== undefined
 
+<<<<<<<< HEAD:src/pages/admin/uks-member/action/create.tsx
   const ctx = trpc.useContext() // New Version useUtils
   const create_member = trpc.member.create.useMutation({
+========
+  const ctx = trpc.useUtils() // New Version useUtils
+  const createMember = trpc.member.create.useMutation({
+>>>>>>>> 34cf44a4eb89a38e669c7cac7519f408ccaf04b4:src/pages/admin/department-members/action/create.tsx
     onSuccess: async ({message}) => {
       toast({
         title: "Message",
         description: message
       })
-      await ctx.member.all.invalidate();
       if (isModal) {
         close(false)
       }
+      await ctx.member.all.invalidate();
     },
     onError: ({data, message}) => {
 
@@ -58,7 +63,7 @@ export const FormCreateMember = ({close}: {
 
 
   const onSubmit = async (data: UksMemberForm) => {
-    await create_member.mutateAsync(data)
+    await createMember.mutateAsync(data)
   }
   return (
     <>
@@ -82,7 +87,7 @@ export const FormCreateMember = ({close}: {
           </div>
           <div className="flex flex-col gap-2">
             <Label>No. Telepon: </Label>
-            <Input {...register("notelp")} placeholder="0812********"/>
+            <Input type="number" {...register("notelp")} placeholder="0812********"/>
             {errors.notelp?.message && <p className="text-xs font-medium text-red-500">{errors.notelp?.message}</p>}
           </div>
           <div className="grid grid-cols-4 gap-2">
@@ -109,12 +114,12 @@ export const FormCreateMember = ({close}: {
         </div>
         <div className="flex justify-end gap-2">
           <Button
-            disabled={create_member.isLoading}
+            disabled={createMember.isLoading}
             variant="ghost"
             type="button"
             onClick={() => close ? close(false) : null}
           >Close</Button>
-          <Button disabled={create_member.isLoading}>Tambah</Button>
+          <Button disabled={createMember.isLoading}>Tambah</Button>
         </div>
       </form>
     </>

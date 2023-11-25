@@ -4,7 +4,9 @@ export const uksMemberSchema = z.object({
   id: z.number(),
   nama: z.string().min(1, "The Nama field is required"),
   jenis_kelamin: z.union([
-    z.enum(["Laki-laki", "Perempuan"]),
+    z.enum(["Laki-laki", "Perempuan"], {
+      required_error: "The Jenis Kelamin field is required"
+    }),
     z.string().min(1, "The Jenis Kelamin field is required")
   ]),
   nisn: z.string().min(1, "The Nisn field is required"),

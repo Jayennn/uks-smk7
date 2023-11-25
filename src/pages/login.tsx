@@ -4,15 +4,18 @@ import {Input} from "@/components/ui/input";
 import {useForm} from "react-hook-form";
 import {LoginForm, loginSchema} from "@/server/api/routers/auth/schema";
 import {zodResolver} from "@hookform/resolvers/zod";
-import {signIn} from "next-auth/react";
+import {signIn, useSession} from "next-auth/react";
 import {useRouter} from "next/router";
 import {useState} from "react";
-import {Loader} from "lucide-react";
+import {Loader, LogIn} from "lucide-react";
+import {cn} from "@/lib/utils";
 
 
 
 const Login = () => {
     const [isLoading, setIsLoading] = useState(false);
+    const {data: sesh} = useSession();
+
     const router = useRouter();
     const {
         register,
@@ -27,7 +30,6 @@ const Login = () => {
     })
 
     const onSubmit = async({username, password}: LoginForm) => {
-        console.log(1)
         setIsLoading(true)
         const res = await signIn("credentials", {
             username,
@@ -36,13 +38,12 @@ const Login = () => {
             redirect: false
         })
 
-
-        if(!res?.ok) {
+        if(!res?.ok && !sesh?.user.level) {
             console.log(res?.error)
             return;
         }
 
-        await router.replace(`${res?.url ?? ""}`)
+        await router.replace(`${res?.url ?? "/"}`)
         setIsLoading(false)
     }
 
@@ -76,8 +77,18 @@ const Login = () => {
                           />
                           <p className="text-xs text-red-500 font-medium">{errors?.password?.message ?? ""}</p>
                       </div>
-                      <Button>
-                          {isLoading ? <Loader className="animate-spin"/> : "Login"}
+                      <Button className={cn(isLoading && "text-muted-foreground")}>
+                          {isLoading ? (
+                            <>
+                                <Loader size={18} className="mr-2 animate-spin"/>
+                                Processing...
+                            </>
+                          ) : (
+                            <>
+                                <LogIn size={18} className="mr-2"/>
+                                Login
+                            </>
+                          )}
                       </Button>
                   </div>
               </form>

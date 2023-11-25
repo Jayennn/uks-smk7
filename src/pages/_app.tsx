@@ -7,7 +7,7 @@ import {Session} from "next-auth";
 import {NextPage} from "next";
 import {trpc} from "@/utils/trpc";
 import { Toaster } from "@/components/ui/toaster"
-import {inter} from "@/lib/font";
+import {poppins} from "@/lib/font";
 
 export type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
     getLayout?: (page: ReactElement) => ReactNode
@@ -25,8 +25,8 @@ const MyApp = ({
         <>
                 <SessionProvider session={session}>
                     <main className={cn(
-                        inter.variable,
-                        "min-h-screen bg-background font-inter antialiased"
+                        poppins.variable,
+                        "min-h-screen bg-background font-poppins antialiased"
                     )}>
                         {getLayout(<Component {...pageProps} />)}
                         <Toaster />

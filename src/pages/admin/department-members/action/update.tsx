@@ -1,6 +1,6 @@
 import {Label} from "@/components/ui/label";
 import {Input} from "@/components/ui/input";
-import {useForm} from "react-hook-form";
+import {Controller, useForm} from "react-hook-form";
 import {UksMember, UksMemberForm, uksMemberSchema} from "@/server/api/routers/uks-member/schema";
 import {zodResolver} from "@hookform/resolvers/zod";
 import {Axios} from "@/utils/axios";
@@ -11,6 +11,11 @@ import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from "@/c
 import {Button} from "@/components/ui/button";
 import {trpc} from "@/utils/trpc";
 import {useToast} from "@/components/ui/use-toast";
+<<<<<<<< HEAD:src/pages/admin/uks-member/action/update.tsx
+========
+import {Skeleton} from "@/components/ui/skeleton";
+import {Loader, Pencil} from "lucide-react";
+>>>>>>>> 34cf44a4eb89a38e669c7cac7519f408ccaf04b4:src/pages/admin/department-members/action/update.tsx
 interface UpdateMemberProps {
   id: number
   close: ((open: boolean) => void) | undefined
@@ -23,9 +28,9 @@ const FormUpdateMember = ({id, close}: UpdateMemberProps) => {
 
   const {
     register,
-    setValue,
-    watch,
+    getValues,
     handleSubmit,
+    control,
     formState: { errors }
   } = useForm<UksMember>({
     resolver: zodResolver(uksMemberSchema),
@@ -33,6 +38,7 @@ const FormUpdateMember = ({id, close}: UpdateMemberProps) => {
       const res = await Axios.get(`/admin/anggota/${id}`, {
         headers: {Authorization: `Bearer ${session?.user.token ?? ""}`},
       })
+
       const { anggota } = res.data as {
         message: string,
         anggota: UksMember
@@ -79,32 +85,53 @@ const FormUpdateMember = ({id, close}: UpdateMemberProps) => {
         <div className="grid gap-3">
           <div className="flex flex-col gap-2">
             <Label>Nama: </Label>
-            <Input {...register("nama")} placeholder="John Doe"/>
+            {!getValues("nama") ? (
+              <Skeleton className="h-9 w-full"/>
+            ) : (
+              <Input {...register("nama")} placeholder="John Doe"/>
+            )}
             {errors.nama?.message && <p className="text-xs font-medium text-red-500">{errors.nama?.message}</p>}
           </div>
           <div className="flex flex-col gap-2">
             <Label>NISN: </Label>
-            <Input {...register("nisn")} placeholder="0068******"/>
+            {!getValues("nisn") ? (
+              <Skeleton className="h-9 w-full"/>
+            ) : (
+              <Input {...register("nisn")} placeholder="0068******"/>
+            )}
             {errors.nisn?.message && <p className="text-xs font-medium text-red-500">{errors.nisn?.message}</p>}
           </div>
           <div className="flex flex-col gap-2">
             <Label>Alamat: </Label>
-            <Input {...register("alamat")} placeholder="Jl. Bungtomo"/>
+            {!getValues("alamat") ? (
+              <Skeleton className="h-9 w-full"/>
+            ) : (
+              <Input {...register("alamat")} placeholder="Jl. Bungtomo"/>
+            )}
             {errors.alamat?.message && <p className="text-xs font-medium text-red-500">{errors.alamat?.message}</p>}
           </div>
           <div className="flex flex-col gap-2">
             <Label>No. Telepon: </Label>
-            <Input {...register("notelp")} placeholder="0812********"/>
+            {!getValues("notelp") ? (
+              <Skeleton className="h-9 w-full"/>
+            ) : (
+              <Input {...register("notelp")} placeholder="0812********"/>
+            )}
             {errors.notelp?.message && <p className="text-xs font-medium text-red-500">{errors.notelp?.message}</p>}
           </div>
           <div className="grid grid-cols-4 gap-2">
             <div className="col-span-2 flex flex-col gap-2">
               <Label>Kelas: </Label>
-              <Input {...register("kelas")} placeholder="XII PPLG 1"/>
+              {!getValues("kelas") ? (
+                <Skeleton className="h-9 w-full"/>
+              ) : (
+               <Input {...register("kelas")} placeholder="XII PPLG 1"/>
+              )}
               {errors.kelas?.message && <p className="text-xs font-medium text-red-500">{errors.kelas?.message}</p>}
             </div>
             <div className="col-span-2 flex flex-col gap-2">
               <Label>Jenis Kelamin: </Label>
+<<<<<<<< HEAD:src/pages/admin/uks-member/action/update.tsx
               <Select value={watch("jenis_kelamin")} onValueChange={(value: string) => setValue("jenis_kelamin", value)}>
                 <SelectTrigger>
                   <SelectValue placeholder="Jenis Kelamin"/>
@@ -114,6 +141,27 @@ const FormUpdateMember = ({id, close}: UpdateMemberProps) => {
                   <SelectItem value="Perempuan">Perempuan</SelectItem>
                 </SelectContent>
               </Select>
+========
+              {!getValues("jenis_kelamin") ? (
+                <Skeleton className="h-9 w-full"/>
+              ) : (
+                <Controller
+                  render={({field}) => (
+                    <Select value={field.value} onValueChange={(value: string) => field.onChange(value)}>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Jenis Kelamin"/>
+                      </SelectTrigger>
+                      <SelectContent className="font-inter">
+                        <SelectItem value="Laki-laki">Laki-laki</SelectItem>
+                        <SelectItem value="Perempuan">Perempuan</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  )}
+                  name="jenis_kelamin"
+                  control={control}
+                />
+              )}
+>>>>>>>> 34cf44a4eb89a38e669c7cac7519f408ccaf04b4:src/pages/admin/department-members/action/update.tsx
               {errors.jenis_kelamin?.message &&
                   <p className="text-xs font-medium text-red-500">{errors.jenis_kelamin?.message}</p>}
             </div>
@@ -126,7 +174,23 @@ const FormUpdateMember = ({id, close}: UpdateMemberProps) => {
               type="button"
               onClick={() => close ? close(false) : null}
             >Close</Button>
+<<<<<<<< HEAD:src/pages/admin/uks-member/action/update.tsx
             <Button disabled={updateMember.isLoading}>Edit</Button>
+========
+            <Button disabled={updateMember.isLoading}>
+              {updateMember.isLoading ? (
+                <>
+                  <Loader size={18} className="mr-2 animate-spin"/>
+                  Loading
+                </>
+              ): (
+                <>
+                  <Pencil size={18} className="mr-2"/>
+                  Edit
+                </>
+              )}
+            </Button>
+>>>>>>>> 34cf44a4eb89a38e669c7cac7519f408ccaf04b4:src/pages/admin/department-members/action/update.tsx
           </div>
       </form>
     </>

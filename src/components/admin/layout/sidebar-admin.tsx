@@ -6,10 +6,11 @@ import {cn} from "@/lib/utils";
 import {useRouter} from "next/router";
 import Link from "next/link";
 
+
 type LinkTypes = {
   icon: LucideIcon,
   label: string,
-  href?: string
+  href: string
   subItem?: Array<{
     label: string
     href: string
@@ -25,49 +26,41 @@ const linksDef: LinkTypes[] = [
   {
     icon: FileText,
     label: "Forms",
+    href: "/admin/manage-forms",
     subItem: [
       {
+        label: "Bagian Form Kesehatan",
+        href: "/admin/manage-forms/section-forms"
+      },
+      {
         label: "Opsi Rapor Kesehatan",
-        href: "/admin/forms/option-forms"
+        href: "/admin/manage-forms/option-forms"
       },
       {
         label: "Form Rapor Kesehatan",
-        href: "#"
+        href: "/admin/manage-forms"
       }
     ]
   },
   {
     icon: Users,
     label:"Anggota UKS",
-    href: "/admin/uks-member",
+    href: "/admin/department-members",
   },
   {
     icon: UserCog,
     label: "Manage User",
     href: "/admin/manage-user",
   },
-  // {
-  //   icon: Newspaper,
-  //   label: "Master Data",
-  //   subItem: [
-  //     {
-  //       label: "User",
-  //       href: "/admin-uks/master-data/manage-user"
-  //     },
-  //     {
-  //       label: "Anggota UKS",
-  //       href: "/admin-uks/master-data/anggota-uks"
-  //     }
-  //   ]
-  // }
 ]
 
 const SidebarAdmin = () => {
   const router = useRouter();
 
+
   return (
     <>
-      <aside className="hidden bg-[#FFFFFF] lg:flex flex-col space-y-4 max-w-[280px] w-full border-r">
+      <aside className=" bg-[#FFFFFF] flex flex-col space-y-4 max-w-[280px] w-full border-r">
         <div className="text-center py-4">
           <h1 className="text-[#222831] text-2xl font-semibold">UKS</h1>
         </div>
@@ -78,32 +71,27 @@ const SidebarAdmin = () => {
             collapsible
           >
             {linksDef.map((link, index) => (
-              <AccordionItem key={`navigation-${index}`} value={`navigation-${link.label}`} className="text-[#344054] text-sm border-none">
+              <AccordionItem
+                key={`navigation-${index}`}
+                value={`navigation-${link.label}`}
+                className="text-[#344054] text-sm border-none">
                     <AccordionTrigger
-                      asChild={!link.subItem}
+                      asChild
                       className={cn(
                         "transition-all px-4 py-3 hover:no-underline rounded-lg hover:bg-[#EEEEEE]",
-                        router.pathname === link.href && "bg-[#EEEEEE]/90"
+                        router.pathname ===  link.href && "bg-[#EEEEEE]/90",
                       )}>
-                      {link?.href ? (
-                        <Link href={link.href}>
-                          <div className="flex items-center gap-3">
-                            <link.icon size={20}/>
-                            {link.label}
-                          </div>
-                        </Link>
-                      ) : (
-                        <>
-                          <div className="flex items-center gap-3">
-                            <link.icon size={20}/>
-                            {link.label}
-                          </div>
-                          {link.subItem && (
-                            <ChevronDownIcon
-                              className="h-4 w-4 shrink-0 text-muted-foreground transition-transform duration-200"/>
-                          )}
-                        </>
-                      )}
+                      <Link href={link.href} className="flex items-center justify-between">
+                        <div className="flex items-center gap-3">
+                          <link.icon size={20}/>
+                          {link.label}
+                        </div>
+                        {link.subItem && (
+                          <ChevronDownIcon
+                            className="h-4 w-4 shrink-0 text-muted-foreground transition-transform duration-200"/>
+                        )}
+                      </Link>
+
                     </AccordionTrigger>
                     {link.subItem && (
                       <AccordionContent
@@ -112,12 +100,13 @@ const SidebarAdmin = () => {
                         {link.subItem.map((sub_item, index) => (
                             <div key={`sub-link-${sub_item.label}-${index}`} className="group relative">
                               <div className={cn(
-                                "absolute bottom-0 w-0 transition-all group-hover:w-full h-[0.03rem] bg-black/70",
-                                router.pathname.includes(sub_item.href) && "w-full"
+                                "absolute bottom-0 w-0 transition-all group-hover:w-full h-[2px] bg-black/70 rounded-full",
+                                router.pathname === sub_item.href && "w-full"
                               )} />
                               {sub_item?.href ? (
                                 <Link
-                                  key={`sub-${sub_item.label}-${index}`} className="inline-block w-full py-4"
+                                  key={`sub-${sub_item.label}-${index}`}
+                                  className="inline-block w-full py-4"
                                   href={sub_item.href}
                                 >
                                   {sub_item.label}

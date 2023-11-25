@@ -9,10 +9,12 @@ import {Avatar, AvatarFallback} from "@/components/ui/avatar";
 import {LogOut} from "lucide-react";
 import {trpc} from "@/utils/trpc";
 import {useToast} from "@/components/ui/use-toast";
-import {signOut} from "next-auth/react";
+import {signOut, useSession} from "next-auth/react";
+import {initialName} from "@/lib/utils";
 
 const DropdownAvatar = () => {
   const {toast} = useToast();
+  const { data: session} = useSession();
 
   const logout = trpc.auth.logout.useMutation({
     onSuccess: ({ message }) => {
@@ -20,6 +22,7 @@ const DropdownAvatar = () => {
         title: "Success",
         description: message
       })
+      localStorage.clear()
     },
     onError: ({ data, message }) => {
       toast({
@@ -37,7 +40,7 @@ const DropdownAvatar = () => {
         <DropdownMenuTrigger>
           <Avatar>
             <AvatarFallback className="bg-[#F9FAFB]">
-              AD
+              {initialName(session?.user.username ?? "")}
             </AvatarFallback>
           </Avatar>
         </DropdownMenuTrigger>

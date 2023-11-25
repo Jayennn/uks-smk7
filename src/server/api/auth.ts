@@ -9,9 +9,10 @@ declare module "next-auth" {
             id: string | number,
             id_user: string | number | null,
             username: string,
-            level: number,
+            level: number | string,
             last_login: string,
-            token: string
+            token: string,
+            nama: string,
 
         },
         expires: string
@@ -80,6 +81,7 @@ export const auth: NextAuthOptions = {
         signIn: "/login"
     },
     callbacks: {
+
         jwt({token, user}) {
             return { ...token, ...user };
         },
