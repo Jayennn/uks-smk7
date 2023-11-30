@@ -10,7 +10,7 @@ export const userRouter = createTRPCRouter({
       const res = await Axios.get("/admin/user", conf)
 
       return res.data as {
-        users: User[],
+        data: User[],
         message: string
       }
     }),
@@ -22,7 +22,7 @@ export const userRouter = createTRPCRouter({
 
       return res.data as {
         message: string,
-        user: User
+        data: User
       }
     })
 })

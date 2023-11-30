@@ -56,16 +56,16 @@ const RenderDetailMember = () => {
   )
 }
 
-const DataDetailMember = ({ data }: {
-  data: {
+const DataDetailMember = ({ anggota }: {
+  anggota: {
     message: string,
-    anggota: UksMember
+    data: UksMember
   }
 }) => {
   return (
     <>
       <DialogHeader>
-        <DialogTitle>{data.anggota.nama}</DialogTitle>
+        <DialogTitle>{anggota.data.nama}</DialogTitle>
         <DialogDescription>
           Detail Anggota UKS-SMKN7
         </DialogDescription>
@@ -73,28 +73,28 @@ const DataDetailMember = ({ data }: {
       <div className="pt-4 flex flex-col gap-3">
         <div className="flex flex-col gap-2">
           <Label htmlFor="nama">Nama: </Label>
-          <Input className="disabled:font-medium" disabled value={data.anggota.nama}/>
+          <Input className="disabled:font-medium" disabled value={anggota.data.nama}/>
         </div>
         <div className="flex flex-col gap-2">
           <Label htmlFor="nama">NISN: </Label>
-          <Input className="disabled:font-medium" disabled value={data.anggota.nisn}/>
+          <Input className="disabled:font-medium" disabled value={anggota.data.nisn}/>
         </div>
         <div className="flex flex-col gap-2">
           <Label htmlFor="nama">Alamat: </Label>
-          <Input className="disabled:font-medium" disabled value={data.anggota.alamat}/>
+          <Input className="disabled:font-medium" disabled value={anggota.data.alamat}/>
         </div>
         <div className="flex flex-col gap-2">
           <Label htmlFor="nama">No. Telepon: </Label>
-          <Input className="disabled:font-medium" disabled value={data.anggota.notelp}/>
+          <Input className="disabled:font-medium" disabled value={anggota.data.notelp}/>
         </div>
         <div className="grid grid-cols-4 gap-2">
           <div className="col-span-2 flex flex-col gap-2">
             <Label htmlFor="nama">Kelas: </Label>
-            <Input className="disabled:font-medium" disabled value={data.anggota.kelas}/>
+            <Input className="disabled:font-medium" disabled value={anggota.data.kelas}/>
           </div>
           <div className="col-span-2 flex flex-col gap-2">
             <Label htmlFor="nama">Jenis Kelamin: </Label>
-            <Input className="disabled:font-medium" disabled value={data.anggota.jenis_kelamin}/>
+            <Input className="disabled:font-medium" disabled value={anggota.data.jenis_kelamin}/>
           </div>
         </div>
       </div>
@@ -103,7 +103,7 @@ const DataDetailMember = ({ data }: {
 }
 
 const ModalDetailMember = ({open, onOpenChange, id}: DialogProps) => {
-  const { data } = trpc.member.single.useQuery({
+  const { data: anggota } = trpc.member.single.useQuery({
     id
   })
 
@@ -111,11 +111,11 @@ const ModalDetailMember = ({open, onOpenChange, id}: DialogProps) => {
     <>
       <Dialog open={open} onOpenChange={onOpenChange}>
         <DialogContent className="font-inter sm:max-w-[580px]">
-          {!data?.anggota ? (
+          {!anggota?.data ? (
             <RenderDetailMember/>
           ) : (
             <DataDetailMember
-              data={data}
+              anggota={anggota}
             />
           )}
         </DialogContent>
