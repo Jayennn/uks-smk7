@@ -2,7 +2,13 @@ import {NextPageWithLayout} from "@/pages/_app";
 import {ReactElement, useState} from "react";
 import LayoutAdmin from "@/components/admin/layout/layout-admin";
 import DataTable from "@/components/table/data-table";
-import {ColumnFiltersState, getCoreRowModel, getFilteredRowModel, useReactTable} from "@tanstack/react-table";
+import {
+  ColumnFiltersState,
+  getCoreRowModel,
+  getFilteredRowModel,
+  getPaginationRowModel,
+  useReactTable
+} from "@tanstack/react-table";
 import {trpc} from "@/utils/trpc";
 import {columns} from "@/server/api/routers/uks-member/columns"
 import DataTableFilter from "@/components/table/data-table-filter";
@@ -14,13 +20,19 @@ const Page: NextPageWithLayout = () => {
   const {data: member, isLoading} = trpc.member.all.useQuery()
 
   const table = useReactTable({
-    data: member?.anggotas ?? [],
+    data: member?.data ?? [],
     columns,
     getCoreRowModel: getCoreRowModel(),
     onColumnFiltersChange: setColumnFilter,
     getFilteredRowModel: getFilteredRowModel(),
+    getPaginationRowModel: getPaginationRowModel(),
     state: {
       columnFilters
+    },
+    initialState: {
+      pagination: {
+          pageSize: 5
+      }
     }
   })
 
@@ -50,6 +62,24 @@ const Page: NextPageWithLayout = () => {
             table={table}
             colLength={columns.length}
           />
+          <div className="flex justify-end items-center gap-3">
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => table.previousPage()}
+              disabled={!table.getCanPreviousPage()}
+            >
+              Previous
+            </Button>
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => table.nextPage()}
+              disabled={!table.getCanNextPage()}
+            >
+              Next
+            </Button>
+          </div>
         </div>
       </div>
     </>

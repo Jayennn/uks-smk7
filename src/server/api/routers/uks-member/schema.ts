@@ -9,13 +9,17 @@ export const uksMemberSchema = z.object({
     }),
     z.string().min(1, "The Jenis Kelamin field is required")
   ]),
-  nisn: z.string().min(1, "The Nisn field is required"),
+  nisn: z.string().min(1,"The Nisn field is required").max(10, "The Nisn field is too long"),
   kelas: z.string().min(1, "The Kelas field is required"),
-  notelp: z.string().min(1, "The No. Telepon field is required"),
+  notelp: z.string().min(1, "The No. Telepon field is required").max(13, "The No. Telepon is too long"),
   alamat: z.string().min(1, "The Alamat field is required"),
   status_aktif: z.union([
     z.enum(["0", "1", "2"]),
     z.string()
+  ]),
+  ttl: z.union([
+    z.date(),
+    z.string().min(1, "The Tempat Tanggal Lahir Field is required")
   ]),
   created_at: z.string(),
   updated_at: z.string()
@@ -27,8 +31,10 @@ export const uksMemberFormSchema = uksMemberSchema.pick({
   kelas: true,
   notelp: true,
   alamat: true,
-  jenis_kelamin: true
+  jenis_kelamin: true,
+  ttl: true
 })
+
 
 
 export type UksMemberForm = z.infer<typeof uksMemberFormSchema>

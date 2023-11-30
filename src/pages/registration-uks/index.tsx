@@ -1,5 +1,5 @@
 import {NextPageWithLayout} from "@/pages/_app";
-import {ReactElement, useEffect} from "react";
+import {ReactElement, useEffect, useState} from "react";
 import LayoutHome from "@/components/home/layout/layout-home";
 import {Label} from "@/components/ui/label";
 import {Input} from "@/components/ui/input";
@@ -10,12 +10,23 @@ import {Controller, useForm} from "react-hook-form";
 import {UksMemberForm, uksMemberFormSchema} from "@/server/api/routers/uks-member/schema";
 import {zodResolver} from "@hookform/resolvers/zod";
 import {trpc} from "@/utils/trpc";
-import {useToast} from "@/components/ui/use-toast";
+import {toast} from "sonner";
 import {useSession} from "next-auth/react";
+import {Combobox} from "@/components/ui/combobox";
+import {ANIMASIClasses, DKVClasses, PPLGClasses, StudentClasses, TJKTClasses} from "@/types/student";
+import {DatePicker} from "@/components/ui/date-picker";
+import {format} from "date-fns";
 
 const Page: NextPageWithLayout = () => {
   const {data: session} = useSession();
-  const {toast} = useToast();
+  const [birth, setBirth] = useState<{
+    place: string,
+    date: string
+  }>({
+    date: "",
+    place: ""
+  })
+
   const {
     register  ,
     handleSubmit,
@@ -30,7 +41,8 @@ const Page: NextPageWithLayout = () => {
       alamat: "",
       jenis_kelamin: "",
       notelp: "",
-      kelas: ""
+      kelas: "",
+      ttl: ""
     }
   })
 
@@ -42,27 +54,23 @@ const Page: NextPageWithLayout = () => {
   }, [session]);
 
   const ctx = trpc.useUtils();
-  const create_member = trpc.member.createInStudent.useMutation({
+  const createMember = trpc.member.createInStudent.useMutation({
     onSuccess: async ({message}) => {
-      toast({
-        title: "Message",
-        description: message
-      })
+      toast.success(message)
       await ctx.member.all.invalidate();
     },
     onError: ({data, message}) => {
-      toast({
-        title: "Error",
-        variant: "destructive",
-        // @ts-ignore
-        description: data?.errZod ?? message
-      })
+      toast.error(data?.errZod ?? message)
     }
   })
 
   const onSubmit = async (data: UksMemberForm) => {
-    await create_member.mutateAsync(data)
+    await createMember.mutateAsync({
+      ...data,
+      ttl: `${birth.place}, ${birth.date}`
+    })
   }
+
 
   return (
     <>
@@ -104,7 +112,21 @@ const Page: NextPageWithLayout = () => {
               <div className="grid grid-cols-1 md:grid-cols-4 gap-2">
                 <div className="col-span-2 flex flex-col gap-2">
                   <Label htmlFor="kelas">Kelas: </Label>
-                  <Input {...register("kelas")} id="kelas" placeholder="XII PPLG 1"/>
+                  <Controller
+                    render={({field}) => (
+                      <Combobox
+                        className="w-full font-normal"
+                        setValue={(v: string) => field.onChange(v.toUpperCase())}
+                        value={field.value}
+                        label={field.value ? field.value : "Pilih Kelas"}
+                        placeholder="Cari Kelas..."
+                        data={[...PPLGClasses, ...DKVClasses, ...TJKTClasses, ...ANIMASIClasses]}
+                      />
+                    )}
+                    name="kelas"
+                    control={control}
+                  />
+
                   {errors.kelas?.message && <p className="text-xs font-medium text-red-500">{errors.kelas?.message}</p>}
                 </div>
                 <div className="col-span-2 flex flex-col gap-2">
@@ -114,17 +136,19 @@ const Page: NextPageWithLayout = () => {
                   <Controller
                     render={({field}) => (
                       <>
-                        <Select onValueChange={(value: string) => field.onChange(value)}>
+                        <Select
+                          value={field.value}
+                          onValueChange={field.onChange}
+                        >
                           <SelectTrigger>
-                            <SelectValue placeholder="Jenis Kelamin"/>
+                            <SelectValue placeholder={field.value ? field.value : "Jenis Kelamin"}/>
                           </SelectTrigger>
                           <SelectContent className="font-poppins">
                             <SelectItem value="Laki-laki">Laki-laki</SelectItem>
                             <SelectItem value="Perempuan">Perempuan</SelectItem>
                           </SelectContent>
                         </Select>
-                        {errors.jenis_kelamin?.message &&
-                            <p className="text-xs font-medium text-red-500">{errors.jenis_kelamin?.message}</p>}
+                        {errors.jenis_kelamin?.message && <p className="text-xs font-medium text-red-500">{errors.jenis_kelamin?.message}</p>}
                       </>
                     )}
                     name="jenis_kelamin"
@@ -132,9 +156,37 @@ const Page: NextPageWithLayout = () => {
                   />
                 </div>
               </div>
+              <div className="flex flex-col gap-2">
+                <Label>Tempat Tanggal Lahir:</Label>
+                <div className="w-[20rem] flex items-center gap-4">
+                  <Input onChange={(e) => setBirth((prev) => ({
+                    ...prev,
+                    place: e.target.value
+                  }))} className="rounded-none shadow-none border-0 border-b focus-visible:ring-0" placeholder="Tempat Lahir"/>
+                  /
+                  <Controller
+                    render={({field}) => (
+                     <DatePicker
+                       mode="single"
+                       date={field.value as Date}
+                       onSelect={(e) => {
+                         field.onChange(e)
+                         setBirth((prev) => ({
+                           ...prev,
+                           date: format(e as Date, "MM-dd-yyyy")
+                         }))
+                       }}
+                     />
+                    )}
+                    control={control}
+                    name="ttl"
+                  />
+                </div>
+                {errors.ttl?.message && <p className="text-xs font-medium text-red-500">{errors.ttl?.message}</p>}
+              </div>
             </div>
-            <Button disabled={create_member.isLoading} className="ml-auto">
-              {create_member.isLoading ? (
+            <Button disabled={createMember.isLoading} className="ml-auto">
+              {createMember.isLoading ? (
                 <Loader className="mr-2 animate-spin" size={18}/>
                 ) : (
                 <Send className="mr-2" size={18}/>

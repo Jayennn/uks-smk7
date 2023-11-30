@@ -47,15 +47,15 @@ const FooterHome = () => {
             <div className="mt-8 md:mt-0 flex flex-col lg:flex-row items-start lg:items-center gap-4 text-sm font-medium">
               <Link href="#" className="inline-flex space-x-2">
                 <Instagram size={21}/>
-                <p>lsp_p1_smkn7smd</p>
+                {/*<p>lsp_p1_smkn7smd</p>*/}
               </Link>
               <Link href="#"  className="inline-flex space-x-2">
                 <Phone size={21}/>
-                <p>(0541) 7777769</p>
+                {/*<p>(0541) 7777769</p>*/}
               </Link>
               <Link href="#"  className="inline-flex space-x-2">
                 <Mail size={21} />
-                <p>lsp_p1@smkn7-smr.sch.id</p>
+                {/*<p>lsp_p1@smkn7-smr.sch.id</p>*/}
               </Link>
             </div>
           </div>

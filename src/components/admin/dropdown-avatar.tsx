@@ -36,7 +36,7 @@ const DropdownAvatar = () => {
 
   return (
     <>
-      <DropdownMenu>
+      <DropdownMenu modal>
         <DropdownMenuTrigger>
           <Avatar>
             <AvatarFallback className="bg-[#F9FAFB]">

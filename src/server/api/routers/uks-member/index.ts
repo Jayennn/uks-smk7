@@ -14,7 +14,7 @@ export const uksMemberRouter = createTRPCRouter({
       const res = await Axios.get("/admin/anggota", conf)
       return res.data as {
         message: string,
-        anggotas: UksMember[]
+        data: UksMember[]
       }
     }),
   single: protectedProcedure
@@ -25,7 +25,7 @@ export const uksMemberRouter = createTRPCRouter({
 
       return res.data as {
         message: string,
-        anggota: UksMember
+        data: UksMember
       }
     }),
   create: protectedProcedure
@@ -36,7 +36,7 @@ export const uksMemberRouter = createTRPCRouter({
 
       return res.data as {
         message: string,
-        anggota: UksMember
+        data: UksMember
       }
     }),
   createInStudent: protectedProcedure
@@ -46,7 +46,7 @@ export const uksMemberRouter = createTRPCRouter({
       const res = await Axios.post("siswa/anggota/daftar", input, conf)
       return res.data as {
         message: string,
-        anggota: UksMember
+        data: UksMember
       }
     }),
   update: protectedProcedure
@@ -60,7 +60,7 @@ export const uksMemberRouter = createTRPCRouter({
 
       return res.data as {
         message: string,
-        anggota: UksMember
+        data: UksMember
       }
     }),
   delete: protectedProcedure

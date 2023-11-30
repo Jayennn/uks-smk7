@@ -6,7 +6,7 @@ import {type ReactElement, type ReactNode} from "react";
 import {Session} from "next-auth";
 import {NextPage} from "next";
 import {trpc} from "@/utils/trpc";
-import { Toaster } from "@/components/ui/toaster"
+import { Toaster } from "sonner"
 import {poppins} from "@/lib/font";
 import NProgress from "nextjs-progressbar";
 
@@ -24,16 +24,11 @@ const MyApp = ({
     const getLayout = Component.getLayout || ((page) => page)
     return (
         <>
-                <SessionProvider session={session}>
-                    <NProgress color="#000000"/>
-                    <main className={cn(
-                        poppins.variable,
-                        "min-h-screen bg-background font-poppins antialiased"
-                    )}>
-                        {getLayout(<Component {...pageProps} />)}
-                        <Toaster />
-                    </main>
-                </SessionProvider>
+            <SessionProvider session={session}>
+                <NProgress color="#000000"/>
+                    {getLayout(<Component {...pageProps} />)}
+                <Toaster richColors position="top-right"/>
+            </SessionProvider>
         </>
     )
 }

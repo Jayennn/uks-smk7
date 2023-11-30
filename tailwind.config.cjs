@@ -63,6 +63,14 @@ module.exports = {
         md: "calc(var(--radius) - 2px)",
         sm: "calc(var(--radius) - 4px)",
       },
+      width: {
+        select: "var(--radix-select-trigger-width)",
+        popover: "var(--radix-popover-trigger-width)",
+      },
+      maxHeight: {
+        select: "var(--radix-select-content-available-height)",
+        popover: "var(--radix-popover-content-available-height)"
+      },
       keyframes: {
         "accordion-down": {
           from: { height: 0 },

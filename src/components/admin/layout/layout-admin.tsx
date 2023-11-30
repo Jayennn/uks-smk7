@@ -22,7 +22,7 @@ const Layout = (props: PropsWithChildren) => {
     <>
       <div className="flex min-h-screen">
         <SidebarAdmin/>
-        <div className="pl-[17rem] flex flex-col w-full">
+        <div className="lg:pl-[17.5rem] flex flex-col w-full">
           <NavbarAdmin/>
           <div className="h-full bg-[#F9FAFB]">
             <div className="container py-8">

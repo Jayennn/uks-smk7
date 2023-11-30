@@ -5,7 +5,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
- 
+
 @layer base {
   :root {
     --background: 0 0% 100%;
@@ -91,4 +91,27 @@
 .bg-rapor-kesehatan {
   background-image: url("/public/green_bg.svg");
   @apply bg-no-repeat bg-contain bg-center
+}
+
+
+.rdp-vhidden {
+  @apply hidden;
+}
+
+::-webkit-scrollbar-track {
+  background-color: #D9D9D9;
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-primary rounded-full
+}
+
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-primary/80
+}
+
+::-webkit-scrollbar {
+  width: 0.3rem;
+  height: 0.3rem;
 }

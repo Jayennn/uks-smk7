@@ -13,7 +13,7 @@ import {
   DropdownMenuTrigger
 } from "@/components/ui/dropdown-menu";
 import {Loader, MoreHorizontal} from "lucide-react";
-import {useToast} from "@/components/ui/use-toast";
+import {toast} from "sonner";
 import {useState} from "react";
 import ModalDeleteMember from "@/pages/admin/department-members/action/delete";
 import ModalUpdateMember from "@/pages/admin/department-members/action/update";
@@ -22,7 +22,6 @@ import ModalDetailMember from "@/pages/admin/department-members/action/detail";
 
 
 const Action = ({row}: CellContext<UksMember, unknown>) => {
-  const { toast } = useToast();
   const {id} = row.original;
   const ctx = trpc.useUtils();
   const [openDialog, setOpenDialog] = useState({
@@ -35,18 +34,11 @@ const Action = ({row}: CellContext<UksMember, unknown>) => {
 
   const deleteMember = trpc.member.delete.useMutation({
     onSuccess: async({message}) => {
-      toast({
-        title: "Success",
-        description: message
-      })
+      toast.success(message)
       await ctx.member.all.invalidate()
     },
     onError: ({data, message}) => {
-      toast({
-        title: "Error",
-        variant: "destructive",
-        description: data?.errZod ?? message
-      })
+      toast.error(data?.errZod ?? message)
     }
   })
 

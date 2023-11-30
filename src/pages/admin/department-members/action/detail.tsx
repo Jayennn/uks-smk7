@@ -4,6 +4,9 @@ import {Label} from "@/components/ui/label";
 import {UksMember} from "@/server/api/routers/uks-member/schema";
 import {Input} from "@/components/ui/input";
 import {trpc} from "@/utils/trpc";
+import {format,} from "date-fns";
+import {useCallback, useMemo} from "react";
+import {DatePicker} from "@/components/ui/date-picker";
 
 interface DialogProps {
   onOpenChange: () => void
@@ -28,16 +31,18 @@ const RenderDetailMember = () => {
           <Label htmlFor="nama">Nama: </Label>
           <Skeleton className="h-9 w-full"/>
         </div>
-        <div className="flex flex-col gap-2">
-          <Label htmlFor="nisn">NISN: </Label>
-          <Skeleton className="h-9 w-full"/>
+        <div className="grid grid-cols-4 gap-4">
+          <div className="col-span-2 flex flex-col gap-2">
+            <Label htmlFor="nisn">NISN: </Label>
+            <Skeleton className="h-9 w-full"/>
+          </div>
+          <div className="col-span-2 flex flex-col gap-2">
+            <Label htmlFor="no-telepon">No. Telepon: </Label>
+            <Skeleton className="h-9 w-full"/>
+          </div>
         </div>
         <div className="flex flex-col gap-2">
           <Label htmlFor="alamat">Alamat: </Label>
-          <Skeleton className="h-9 w-full"/>
-        </div>
-        <div className="flex flex-col gap-2">
-          <Label htmlFor="no-telepon">No. Telepon: </Label>
           <Skeleton className="h-9 w-full"/>
         </div>
         <div className="grid grid-cols-4 gap-2">
@@ -50,22 +55,42 @@ const RenderDetailMember = () => {
             <Skeleton className="h-9 w-full"/>
           </div>
         </div>
+        <div className="flex flex-col gap-2">
+          <Label htmlFor="TTL">Tempat Tanggal Lahir: </Label>
+          <div className="flex items-center gap-4">
+            <Skeleton className="h-9 w-full"/>
+            <Skeleton className="h-9 w-full"/>
+          </div>
+        </div>
       </div>
 
     </>
   )
 }
 
-const DataDetailMember = ({ data }: {
-  data: {
+const DataDetailMember = ({ anggota }: {
+  anggota: {
     message: string,
-    anggota: UksMember
+    data: UksMember
   }
 }) => {
+  const dateOfBirth = useMemo(() => {
+    if(!anggota.data.ttl){
+      return {place: "Belum Terisi", date: "Belum Terisi"}
+    }
+
+    const date = anggota.data.ttl.toString().split(/[.,] /)
+
+    return {place: date[0], date: format(new Date(date[1]), "dd-MM-yyyy")}
+
+  }, [anggota.data.ttl])
+
+
+
   return (
     <>
       <DialogHeader>
-        <DialogTitle>{data.anggota.nama}</DialogTitle>
+        <DialogTitle>{anggota.data.nama}</DialogTitle>
         <DialogDescription>
           Detail Anggota UKS-SMKN7
         </DialogDescription>
@@ -73,28 +98,45 @@ const DataDetailMember = ({ data }: {
       <div className="pt-4 flex flex-col gap-3">
         <div className="flex flex-col gap-2">
           <Label htmlFor="nama">Nama: </Label>
-          <Input className="disabled:font-medium" disabled value={data.anggota.nama}/>
+          <Input className="disabled:font-medium" disabled value={anggota.data.nama}/>
         </div>
-        <div className="flex flex-col gap-2">
-          <Label htmlFor="nama">NISN: </Label>
-          <Input className="disabled:font-medium" disabled value={data.anggota.nisn}/>
+        <div className="grid grid-cols-4 gap-4">
+          <div className="col-span-2 flex flex-col gap-2">
+            <Label htmlFor="nama">NISN: </Label>
+            <Input className="disabled:font-medium" disabled value={anggota.data.nisn}/>
+          </div>
+          <div className="col-span-2 flex flex-col gap-2">
+            <Label htmlFor="nama">No. Telepon: </Label>
+            <Input className="disabled:font-medium" disabled value={anggota.data.notelp}/>
+          </div>
         </div>
         <div className="flex flex-col gap-2">
           <Label htmlFor="nama">Alamat: </Label>
-          <Input className="disabled:font-medium" disabled value={data.anggota.alamat}/>
-        </div>
-        <div className="flex flex-col gap-2">
-          <Label htmlFor="nama">No. Telepon: </Label>
-          <Input className="disabled:font-medium" disabled value={data.anggota.notelp}/>
+          <textarea className="h-36 resize-none w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 disabled:font-medium" disabled value={anggota.data.alamat}/>
         </div>
         <div className="grid grid-cols-4 gap-2">
           <div className="col-span-2 flex flex-col gap-2">
             <Label htmlFor="nama">Kelas: </Label>
-            <Input className="disabled:font-medium" disabled value={data.anggota.kelas}/>
+            <Input className="disabled:font-medium" disabled value={anggota.data.kelas}/>
           </div>
           <div className="col-span-2 flex flex-col gap-2">
             <Label htmlFor="nama">Jenis Kelamin: </Label>
-            <Input className="disabled:font-medium" disabled value={data.anggota.jenis_kelamin}/>
+            <Input className="disabled:font-medium" disabled value={anggota.data.jenis_kelamin}/>
+          </div>
+        </div>
+        <div className="flex flex-col gap-2">
+          <Label htmlFor="TTL">Tempat Tanggal Lahir: </Label>
+          <div className="flex items-center gap-4">
+            <Input
+              className="disabled:font-medium"
+              disabled
+              value={dateOfBirth.place}
+            />
+            <Input
+              className="disabled:font-medium"
+              disabled
+              value={dateOfBirth.date}
+            />
           </div>
         </div>
       </div>
@@ -103,7 +145,7 @@ const DataDetailMember = ({ data }: {
 }
 
 const ModalDetailMember = ({open, onOpenChange, id}: DialogProps) => {
-  const { data } = trpc.member.single.useQuery({
+  const { data: anggota } = trpc.member.single.useQuery({
     id
   })
 
@@ -111,11 +153,11 @@ const ModalDetailMember = ({open, onOpenChange, id}: DialogProps) => {
     <>
       <Dialog open={open} onOpenChange={onOpenChange}>
         <DialogContent className="font-inter sm:max-w-[580px]">
-          {!data?.anggota ? (
+          {!anggota?.data ? (
             <RenderDetailMember/>
           ) : (
             <DataDetailMember
-              data={data}
+              anggota={anggota}
             />
           )}
         </DialogContent>
