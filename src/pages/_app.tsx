@@ -1,13 +1,11 @@
 import '@/styles/globals.css'
 import type {AppProps} from 'next/app'
-import {cn} from "@/lib/utils";
 import {SessionProvider} from "next-auth/react";
 import {type ReactElement, type ReactNode} from "react";
 import {Session} from "next-auth";
 import {NextPage} from "next";
 import {trpc} from "@/utils/trpc";
 import { Toaster } from "sonner"
-import {poppins} from "@/lib/font";
 import NProgress from "nextjs-progressbar";
 
 export type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {

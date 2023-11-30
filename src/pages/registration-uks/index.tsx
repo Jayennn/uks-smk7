@@ -13,7 +13,7 @@ import {trpc} from "@/utils/trpc";
 import {toast} from "sonner";
 import {useSession} from "next-auth/react";
 import {Combobox} from "@/components/ui/combobox";
-import {ANIMASIClasses, DKVClasses, PPLGClasses, StudentClasses, TJKTClasses} from "@/types/student";
+import {ANIMASIClasses, DKVClasses, PPLGClasses, TJKTClasses} from "@/types/student";
 import {DatePicker} from "@/components/ui/date-picker";
 import {format} from "date-fns";
 

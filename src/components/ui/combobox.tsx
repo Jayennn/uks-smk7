@@ -1,8 +1,6 @@
 import {CaretSortIcon, CheckIcon} from "@radix-ui/react-icons";
 import {Command, CommandEmpty, CommandGroup, CommandInput, CommandItem} from "@/components/ui/command";
-import React, {ReactNode, ReactPortal, useState} from "react";
-import {Select, SelectContent, SelectTrigger, SelectValue} from "@/components/ui/select";
-import {SelectProps} from "@radix-ui/react-select";
+import React, {useState} from "react";
 import {cn} from "@/lib/utils";
 import {Popover, PopoverContent, PopoverTrigger} from "@/components/ui/popover";
 import {PopoverProps} from "@radix-ui/react-popover";
