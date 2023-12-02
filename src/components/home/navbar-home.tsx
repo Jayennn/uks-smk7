@@ -33,8 +33,8 @@ const NavbarHome = () => {
           <Link href="/">
             <Image className="w-[13.5rem] h-10" quality={100} width={250} height={250} src="/uks-logo.webp" alt="icon-uks"/>
           </Link>
-          <div className="hidden md:flex text-sm items-center gap-4 font-medium">
-            <Link href="/" className="rounded-md flex items-center h-9 px-4 py-2">
+          <div className="flex text-sm items-center gap-4 font-medium">
+            <Link href="/" className="hidden md:flex rounded-md  items-center h-9 px-4 py-2">
               Beranda
             </Link>
             {session?.user ? (

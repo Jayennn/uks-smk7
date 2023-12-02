@@ -50,7 +50,7 @@ const Login = () => {
     return (
       <>
           <div className="h-screen grid place-content-center">
-              <form onSubmit={handleSubmit(onSubmit)} className="w-[24rem] max-w-sm flex flex-col rounded-lg border">
+                <form onSubmit={handleSubmit(onSubmit)} className="w-[22rem] md:w-[24rem] lg:max-w-sm flex flex-col rounded-lg border">
                   <div className="flex flex-col space-y-1 p-6">
                       <h3 className="tracking-tight text-2xl font-semibold">Welcome to UKS!</h3>
                       <p className="text-sm text-muted-foreground">Login First!</p>
