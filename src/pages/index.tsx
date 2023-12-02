@@ -6,11 +6,25 @@ import Link from "next/link";
 import {Button} from "@/components/ui/button";
 import {ClipboardList, FileText, KeyRound} from "lucide-react";
 import {useSession} from "next-auth/react";
+import Head from "next/head";
+import {useRouter} from "next/router";
 const Page: NextPageWithLayout = () => {
+  const router = useRouter();
   const {data: session} = useSession();
-  console.log(session?.user)
+
   return (
     <>
+      <Head>
+        <title>Welcome - UKS-SMK7</title>
+        <meta property='og:url' content={`https://uks-smk7.vercel.app${router.asPath}`} />
+        <link rel='canonical' href={`https://uks-smk7.vercel.app${router.asPath}`} />
+        {/* Open Graph  */}
+        <meta property='og:type' content="website" />
+        <meta property='og:site_name' content="UKS-SMK 7" />
+        <meta property='og:description' content="Usaha Kesehatan Sekolah SMK 7 Samarinda" />
+        <meta property='og:title' content="UKS-SMK 7" />
+        <meta name='image' property='og:image' content="/uks-logo.webp" />
+      </Head>
       <section className="container relative flex items-center max-h-full h-[42rem]">
         <div className="max-w-xl relative flex flex-col">
           <h1 className="text-5xl font-bold text-[#1D2739]  md:leading-[3.5rem]">
@@ -25,7 +39,7 @@ const Page: NextPageWithLayout = () => {
             <Image
               width={100}
               height={100}
-              src="/assets/logo/smk7-logo.png"
+              src="/assets/logo/smk7-logo.webp"
               alt="logo SMK 7 Samarinda"
             />
             <Image
@@ -52,14 +66,14 @@ const Page: NextPageWithLayout = () => {
           quality={100}
           width={750}
           height={750}
-          className="hidden lg:block absolute right-0 top-0"
+          className="hidden min-[1300px]:block absolute right-0 top-0"
           src="/right.png"
           alt="uks-banner"
         />
 
       </section>
       <section className="py-28">
-        <div className="h-full container lg:px-16 flex flex-col lg:flex-row lg:items-center justify-between">
+        <div className="h-full container lg:px-16 flex flex-col md:flex-row lg:items-center justify-between">
           <div className="flex flex-col  justify-center max-w-sm">
             <div className="grid gap-3">
               <h1 className="text-5xl text-[#1D2739] font-bold">Rapor Kesehatanku</h1>
@@ -67,7 +81,7 @@ const Page: NextPageWithLayout = () => {
             </div>
 
             <Button asChild size="lg" className="mt-8 bg-[#00CC52] hover:bg-[#00CC52]/90 text-white px-4 py-1.5 h-10 w-fit rounded-md">
-              <Link href={session?.user ? "#" : "/login"}>
+              <Link href={session?.user ? "/rapor-kesehatan" : "/login"}>
                 {session?.user ? (
                   <>
                     <FileText size={18} className="mr-2"/>
@@ -82,16 +96,16 @@ const Page: NextPageWithLayout = () => {
               </Link>
             </Button>
           </div>
-          <div className="pt-[10rem] lg:pt-0 h-full w-full flex items-center justify-center lg:justify-end">
+          <div className="pt-[10rem] md:pt-0 h-full w-full flex items-center justify-center lg:justify-end">
             <div className="relative flex justify-center items-center">
-              <div className="bg-[#0D9247] w-[18rem] h-[19rem] md:w-[26rem] md:h-[20rem]
+              <div className="bg-[#0D9247] w-[18rem] h-[19rem] md:w-[22rem] md:h-[18rem] lg:w-[26rem] lg:h-[20rem]
                rounded-[50px] rotate-[35deg] drop-shadow-2xl"/>
               <Image
                 quality={100}
                 width={350}
                 height={340}
-                className="w-[18rem] h-[20rem] md:w-[22rem] md:h-[24rem] absolute object-contain"
-                src="/rapor-kesehatan.png"
+                className="w-[18rem] h-[20rem] md:w-[18rem] md:h-[22rem] lg:w-[22rem] lg:h-[24rem] absolute object-contain"
+                src="/rapor-kesehatan.webp"
                 alt="rapor-kesehatan"
               />
             </div>

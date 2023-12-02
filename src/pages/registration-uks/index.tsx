@@ -21,9 +21,9 @@ const Page: NextPageWithLayout = () => {
   const {data: session} = useSession();
   const [birth, setBirth] = useState<{
     place: string,
-    date: string
+    date: Date | undefined
   }>({
-    date: "",
+    date: undefined,
     place: ""
   })
 
@@ -85,31 +85,33 @@ const Page: NextPageWithLayout = () => {
                   {...register("nama")}
                   id="name"
                   placeholder="John Doe"
-                  disabled={!!session?.user.nama}
+
                 />
                 {errors.nama?.message && <p className="text-xs font-medium text-red-500">{errors.nama?.message}</p>}
               </div>
-              <div className="flex flex-col gap-2">
-                <Label htmlFor="nisn">NISN: </Label>
-                <Input
-                  {...register("nisn")}
-                  id="nisn"
-                  placeholder="0068******"
-                  disabled={!!session?.user.username}
-                />
-                {errors.nisn?.message && <p className="text-xs font-medium text-red-500">{errors.nisn?.message}</p>}
+              <div className="grid grid-cols-4 gap-4">
+                <div className="col-span-2 flex flex-col gap-2">
+                  <Label htmlFor="nisn">NISN: </Label>
+                  <Input
+                    {...register("nisn")}
+                    id="nisn"
+                    placeholder="0068******"
+
+                  />
+                  {errors.nisn?.message && <p className="text-xs font-medium text-red-500">{errors.nisn?.message}</p>}
+                </div>
+                <div className="col-span-2 flex flex-col gap-2">
+                  <Label htmlFor="no-telepon">No. Telepon / HP: </Label>
+                  <Input {...register("notelp")} type="number" id="no-telepon" className="appearance-none"  placeholder="0812********"/>
+                  {errors.notelp?.message && <p className="text-xs font-medium text-red-500">{errors.notelp?.message}</p>}
+                </div>
               </div>
               <div className="flex flex-col gap-2">
                 <Label htmlFor="alamat">Alamat: </Label>
                 <textarea {...register("alamat")} className="flex h-36 resize-none w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50" id="alamat"  placeholder="Jl. Bungtomo"/>
                 {errors.alamat?.message && <p className="text-xs font-medium text-red-500">{errors.alamat?.message}</p>}
               </div>
-              <div className="flex flex-col gap-2">
-                <Label htmlFor="no-telepon">No. Telepon / HP: </Label>
-                <Input {...register("notelp")} type="number" id="no-telepon" className="appearance-none"  placeholder="0812********"/>
-                {errors.notelp?.message && <p className="text-xs font-medium text-red-500">{errors.notelp?.message}</p>}
-              </div>
-              <div className="grid grid-cols-1 md:grid-cols-4 gap-2">
+              <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
                 <div className="col-span-2 flex flex-col gap-2">
                   <Label htmlFor="kelas">Kelas: </Label>
                   <Controller
@@ -158,7 +160,7 @@ const Page: NextPageWithLayout = () => {
               </div>
               <div className="flex flex-col gap-2">
                 <Label>Tempat Tanggal Lahir:</Label>
-                <div className="w-[20rem] flex items-center gap-4">
+                <div className="flex items-center gap-4">
                   <Input onChange={(e) => setBirth((prev) => ({
                     ...prev,
                     place: e.target.value
@@ -173,7 +175,7 @@ const Page: NextPageWithLayout = () => {
                          field.onChange(e)
                          setBirth((prev) => ({
                            ...prev,
-                           date: format(e as Date, "MM-dd-yyyy")
+                           date: e
                          }))
                        }}
                      />

@@ -79,7 +79,6 @@ const DataDetailMember = ({ anggota }: {
     }
 
     const date = anggota.data.ttl.toString().split(/[.,] /)
-
     return {place: date[0], date: format(new Date(date[1]), "dd-MM-yyyy")}
 
   }, [anggota.data.ttl])
