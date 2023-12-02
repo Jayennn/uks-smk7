@@ -1,5 +1,5 @@
 import {CellContext, ColumnDef} from "@tanstack/react-table";
-import {UksMember} from "@/server/api/routers/uks-member/schema";
+import {UksMember} from "@/server/api/routers/departement-members/schema";
 import {Badge} from "@/components/ui/badge";
 import {dated} from "@/lib/utils";
 import {trpc} from "@/utils/trpc";
@@ -18,6 +18,7 @@ import {useState} from "react";
 import ModalDeleteMember from "@/pages/admin/department-members/action/delete";
 import ModalUpdateMember from "@/pages/admin/department-members/action/update";
 import ModalDetailMember from "@/pages/admin/department-members/action/detail";
+import Switch from "@/components/Switch";
 
 
 
@@ -145,37 +146,41 @@ export const columns: ColumnDef<UksMember>[] = [
     header: "Kelas"
   },
   {
+    accessorKey: "sebagai",
+    header: "Divisi",
+    cell: ({row}) => {
+      const {sebagai} = row.original
+      if(sebagai === "1"){
+        return "PMR"
+      }
+
+      if(sebagai === "2"){
+        return "KKR"
+      }
+
+      if(sebagai === "3"){
+        return "PMR dan KKR"
+      }
+
+      return sebagai ?? "Belum Terisi"
+    }
+  },
+  {
     accessorKey: "status_aktif",
     header: "Status",
     cell: ({row}) => {
-      const { status_aktif } = row.original;
+      const { status_aktif,  id, sebagai} = row.original;
+
       return (
         <>
-          <DropdownMenu>
-            <DropdownMenuTrigger>
-              {/*{*/}
-
-              {/*  const {status_aktif} = row.original;*/}
-              {/*  if(status_aktif === "0") {*/}
-              {/*  return <Badge variant="outline">Menunggu</Badge>*/}
-              {/*} else if(status_aktif === "1"){*/}
-              {/*  return <Badge variant="destructive">Tolak</Badge>*/}
-              {/*} else if(status_aktif === "2"){*/}
-              {/*  return <Badge variant="secondary">terima</Badge>*/}
-              {/*}*/}
-              {/*}*/}
-              <Badge variant="outline">
-                {status_aktif === "0" ? "Menunggu" : status_aktif === "1" ? "Tolak" : status_aktif === "2" ? "Terima" : ""}
-              </Badge>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent onChange={(e) => console.log(e.currentTarget)}>
-              <DropdownMenuLabel>Status</DropdownMenuLabel>
-              <DropdownMenuSeparator/>
-              <DropdownMenuItem>Menunggu</DropdownMenuItem>
-              <DropdownMenuItem>Tolak</DropdownMenuItem>
-              <DropdownMenuItem>Terima</DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
+          <Switch
+            htmlFor="status"
+            data={{
+              id: id.toString(),
+              sebagai,
+              status_aktif
+            }}
+          />
         </>
       )
     }

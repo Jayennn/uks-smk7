@@ -1,6 +1,6 @@
 import {createTRPCRouter, protectedProcedure} from "@/server/api/trpc";
 import {authToken, Axios} from "@/utils/axios";
-import {UksMember, uksMemberFormSchema} from "@/server/api/routers/uks-member/schema";
+import {statusSchema, UksMember, uksMemberFormSchema} from "@/server/api/routers/departement-members/schema";
 import {z} from "zod";
 
 const IDMember = z.object({
@@ -54,9 +54,9 @@ export const uksMemberRouter = createTRPCRouter({
       id: z.number(),
       data: uksMemberFormSchema
     }))
-    .mutation(async({ctx, input: {id, data}}) => {
+    .mutation(async({ctx, input}) => {
       const conf = authToken(ctx.token)
-      const res = await Axios.put(`/admin/anggota/${id}`, data, conf)
+      const res = await Axios.put(`/admin/anggota/${input.id}`, input.data, conf)
 
       return res.data as {
         message: string,
@@ -71,6 +71,17 @@ export const uksMemberRouter = createTRPCRouter({
 
       return res.data as {
         message: string
+      }
+    }),
+  statusUpdate: protectedProcedure
+    .input(statusSchema)
+    .mutation(async({ctx, input}) => {
+      const conf = authToken(ctx.token)
+      const res = await Axios.post("/admin/anggota/status", input, conf)
+
+      return res.data as {
+        message: string,
+        data: UksMember
       }
     })
 })

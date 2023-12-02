@@ -10,7 +10,7 @@ import {
   useReactTable
 } from "@tanstack/react-table";
 import {trpc} from "@/utils/trpc";
-import {columns} from "@/server/api/routers/uks-member/columns"
+import {columns} from "@/server/api/routers/departement-members/columns"
 import DataTableFilter from "@/components/table/data-table-filter";
 import {Button} from "@/components/ui/button";
 import ModalCreateMember from "@/pages/admin/department-members/action/create";

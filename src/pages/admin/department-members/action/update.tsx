@@ -1,7 +1,7 @@
 import {Label} from "@/components/ui/label";
 import {Input} from "@/components/ui/input";
 import {Controller, useForm} from "react-hook-form";
-import {UksMember, UksMemberForm, uksMemberSchema} from "@/server/api/routers/uks-member/schema";
+import {UksMember, UksMemberForm, uksMemberSchema} from "@/server/api/routers/departement-members/schema";
 import {zodResolver} from "@hookform/resolvers/zod";
 import {Axios} from "@/utils/axios";
 import {useSession} from "next-auth/react";

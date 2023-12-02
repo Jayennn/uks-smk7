@@ -1,7 +1,7 @@
 import {Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle} from "@/components/ui/dialog";
 import {Skeleton} from "@/components/ui/skeleton";
 import {Label} from "@/components/ui/label";
-import {UksMember} from "@/server/api/routers/uks-member/schema";
+import {UksMember} from "@/server/api/routers/departement-members/schema";
 import {Input} from "@/components/ui/input";
 import {trpc} from "@/utils/trpc";
 import {format,} from "date-fns";
@@ -26,9 +26,15 @@ const RenderDetailMember = () => {
         </DialogDescription>
       </DialogHeader>
       <div className="pt-4 flex flex-col gap-3">
-        <div className="flex flex-col gap-2">
-          <Label htmlFor="nama">Nama: </Label>
-          <Skeleton className="h-9 w-full"/>
+        <div className="grid grid-cols-4 gap-4">
+          <div className="col-span-2 flex flex-col gap-2">
+            <Label htmlFor="nama">Nama: </Label>
+            <Skeleton className="h-9 w-full"/>
+          </div>
+          <div className="col-span-2 flex flex-col gap-2">
+            <Label htmlFor="divisi">Sebagai: </Label>
+            <Skeleton className="h-9 w-full"/>
+          </div>
         </div>
         <div className="grid grid-cols-4 gap-4">
           <div className="col-span-2 flex flex-col gap-2">
@@ -83,7 +89,19 @@ const DataDetailMember = ({ anggota }: {
 
   }, [anggota.data.ttl])
 
+  const handleDivision = (data: string) => {
+    if(data === "1") {
+      return "PMR"
+    }
 
+    if(data === "2"){
+      return "KKR"
+    }
+
+    if(data === "3"){
+      return "PMR dan KKR"
+    }
+  }
 
   return (
     <>
@@ -94,9 +112,16 @@ const DataDetailMember = ({ anggota }: {
         </DialogDescription>
       </DialogHeader>
       <div className="pt-4 flex flex-col gap-3">
-        <div className="flex flex-col gap-2">
-          <Label htmlFor="nama">Nama: </Label>
-          <Input className="disabled:font-medium" disabled value={anggota.data.nama}/>
+
+        <div className="grid grid-cols-4 gap-4">
+          <div className="col-span-2 flex flex-col gap-2">
+            <Label htmlFor="nama">Nama: </Label>
+            <Input className="disabled:font-medium" disabled value={anggota.data.nama}/>
+          </div>
+          <div className="col-span-2 flex flex-col gap-2">
+            <Label htmlFor="divisi">Sebagai: </Label>
+            <Input className="disabled:font-medium" disabled value={handleDivision(anggota.data.sebagai) ?? "Belum terisi"}/>
+          </div>
         </div>
         <div className="grid grid-cols-4 gap-4">
           <div className="col-span-2 flex flex-col gap-2">

@@ -1,5 +1,5 @@
 import {Controller, useForm} from "react-hook-form";
-import {UksMemberForm, uksMemberFormSchema} from "@/server/api/routers/uks-member/schema";
+import {UksMemberForm, uksMemberFormSchema} from "@/server/api/routers/departement-members/schema";
 import {zodResolver} from "@hookform/resolvers/zod";
 import {
   Dialog,
@@ -50,7 +50,8 @@ export const FormCreateMember = ({close}: {
       notelp: "",
       nisn: "",
       kelas: "",
-      ttl: ""
+      ttl: "",
+
     }
   })
   const isModal = close !== undefined
@@ -81,10 +82,37 @@ export const FormCreateMember = ({close}: {
     <>
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
         <div className="grid gap-3">
-          <div className="flex flex-col gap-2">
-            <Label htmlFor="name">Nama: </Label>
-            <Input id="name" {...register("nama")} placeholder="John Doe"/>
-            {errors.nama?.message && <p className="text-xs font-medium text-red-500">{errors.nama?.message}</p>}
+          <div className="grid grid-cols-4 gap-4">
+            <div className="col-span-2 flex flex-col gap-2">
+              <Label htmlFor="name">Nama: </Label>
+              <Input id="name" {...register("nama")} placeholder="John Doe"/>
+              {errors.nama?.message && <p className="text-xs font-medium text-red-500">{errors.nama?.message}</p>}
+            </div>
+            <div className="col-span-2 flex flex-col gap-2">
+              <Label htmlFor="divisi">Sebagai: </Label>
+              <Controller
+                render={({field}) => (
+                  <>
+                    <Select
+                      value={field.value}
+                      onValueChange={field.onChange}
+                    >
+                      <SelectTrigger>
+                        <SelectValue placeholder="Divisi"/>
+                      </SelectTrigger>
+                      <SelectContent className="font-poppins">
+                        <SelectItem value="1">PMR</SelectItem>
+                        <SelectItem value="2">KKR</SelectItem>
+                        <SelectItem value="3">PMR dan KKR</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </>
+                )}
+                name="sebagai"
+                control={control}
+              />
+              {errors.sebagai?.message && <p className="text-xs font-medium text-red-500">{errors.sebagai?.message}</p>}
+            </div>
           </div>
           <div className="grid grid-cols-4 gap-2">
             <div className="col-span-2 flex flex-col gap-2">
@@ -135,7 +163,7 @@ export const FormCreateMember = ({close}: {
                       onValueChange={field.onChange}
                     >
                       <SelectTrigger>
-                        <SelectValue placeholder={field.value ? field.value : "Jenis Kelamin"}/>
+                        <SelectValue placeholder="Jenis Kelamin"/>
                       </SelectTrigger>
                       <SelectContent className="font-poppins">
                         <SelectItem value="Laki-laki">Laki-laki</SelectItem>
