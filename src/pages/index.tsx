@@ -1,6 +1,5 @@
 import {NextPageWithLayout} from "@/pages/_app";
 import LayoutHome from "@/components/home/layout/layout-home";
-import {ReactElement} from "react";
 import Image from "next/image";
 import Link from "next/link";
 import {Button} from "@/components/ui/button";
@@ -8,6 +7,8 @@ import {ClipboardList, FileText, KeyRound} from "lucide-react";
 import {useSession} from "next-auth/react";
 import Head from "next/head";
 import {useRouter} from "next/router";
+import {ReactElement} from "react";
+
 const Page: NextPageWithLayout = () => {
   const router = useRouter();
   const {data: session} = useSession();
@@ -23,7 +24,7 @@ const Page: NextPageWithLayout = () => {
         <meta property='og:site_name' content="UKS-SMK 7" />
         <meta property='og:description' content="Usaha Kesehatan Sekolah SMK 7 Samarinda" />
         <meta property='og:title' content="UKS-SMK 7" />
-        <meta name='image' property='og:image' content="/og-image.webp" />
+        <meta name='image' property='og:image' content="https://uks-smk7.vercel.app/og-image.webp" />
       </Head>
       <section className="container relative flex items-center max-h-full h-[42rem]">
         <div className="max-w-xl relative flex flex-col">
