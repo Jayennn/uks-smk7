@@ -26,55 +26,56 @@ const Page: NextPageWithLayout = () => {
         <meta property='og:title' content="UKS-SMK 7" />
         <meta name='image' property='og:image' content="https://uks-smk7.vercel.app/og-image.webp" />
       </Head>
-      <section className="container relative flex items-center max-h-full h-[42rem]">
-        <div className="max-w-xl relative flex flex-col">
-          <h1 className="text-5xl font-bold text-[#1D2739]  md:leading-[3.5rem]">
-            Usaha Kesehatan Sekolah{" "}
-            <span className="inline-block text-green-500">
-              SMK NEGERI 7
-            </span>
-            {" "}
-            Samarinda
-          </h1>
-          <div className="mt-8 grid grid-cols-2 justify-items-center md:grid-cols-4 gap-3">
-            <Image
-              width={100}
-              height={100}
-              src="/assets/logo/smk7-logo.webp"
-              alt="logo SMK 7 Samarinda"
-            />
-            <Image
-              width={100}
-              height={100}
-              src="/assets/logo/dinas-kesehatan-logo.png"
-              alt="logo dinas kesehatan Samarinda"
-            />
-            <Image
-              width={100}
-              height={100}
-              src="/assets/logo/uks-logo.png"
-              alt="logo UKS"
-            />
-            <Image
-              width={100}
-              height={100}
-              src="/assets/logo/pmi-logo.png"
-              alt="logo SMK 7 Samarinda"
-            />
+      <section className="py-28">
+        <div className="container lg:px-20 flex items-center justify-between">
+          <div className="max-w-xl relative flex flex-col">
+            <h1 className="text-5xl font-bold text-[#1D2739]  md:leading-[3.5rem]">
+              Usaha Kesehatan Sekolah{" "}
+              <span className="inline-block text-green-500">
+                SMK NEGERI 7
+              </span>
+              {" "}
+              Samarinda
+            </h1>
+            <div className="mt-8 grid grid-cols-2 justify-items-center md:grid-cols-4 gap-3">
+              <Image
+                width={100}
+                height={100}
+                src="/assets/logo/logo-smk7.png"
+                alt="logo SMK 7 Samarinda"
+              />
+              <Image
+                width={100}
+                height={100}
+                src="/assets/logo/dinas-kesehatan.png"
+                alt="logo dinas kesehatan Samarinda"
+              />
+              <Image
+                width={100}
+                height={100}
+                src="/assets/logo/uks-logo.png"
+                alt="logo UKS"
+              />
+              <Image
+                width={100}
+                height={100}
+                src="/assets/logo/pmi-logo.png"
+                alt="logo SMK 7 Samarinda"
+              />
+            </div>
           </div>
+          <Image
+            quality={100}
+            width={450}
+            height={450}
+            className="hidden min-[1300px]:block"
+            src="/banner3.svg"
+            alt="uks-banner"
+          />
         </div>
-        <Image
-          quality={100}
-          width={750}
-          height={750}
-          className="hidden min-[1300px]:block absolute right-0 top-0"
-          src="/right.png"
-          alt="uks-banner"
-        />
-
       </section>
       <section className="py-28">
-        <div className="h-full container lg:px-16 flex flex-col md:flex-row lg:items-center justify-between">
+        <div className="container lg:px-20 flex flex-col md:flex-row lg:items-center justify-between">
           <div className="flex flex-col  justify-center max-w-sm">
             <div className="grid gap-3">
               <h1 className="text-5xl text-[#1D2739] font-bold">Rapor Kesehatanku</h1>
@@ -114,7 +115,7 @@ const Page: NextPageWithLayout = () => {
         </div>
       </section>
       <section className="py-28">
-        <div className="container flex flex-col space-y-4 items-center justify-center">
+        <div className="container lg:px-20 flex flex-col space-y-4 items-center justify-center">
           <h1 className="text-[#1D2739] text-4xl font-bold">
             Visi
             {" "}
@@ -129,7 +130,7 @@ const Page: NextPageWithLayout = () => {
         </div>
       </section>
       <section className="py-28 bg-[#F5F5FF]">
-        <div className="container flex items-center justify-center">
+        <div className="container lg:px-20 flex items-center justify-center">
           <div className="max-w-5xl flex flex-col md:flex-row  items-center gap-12">
             <Image
               width={250}
@@ -139,8 +140,7 @@ const Page: NextPageWithLayout = () => {
             />
             <div className="flex flex-col space-y-4">
               <h1 className="uppercase text-[#1D2739] text-4xl md:leading-[2.5rem] font-bold">
-                Join Komunitas UKS.
-                <br/> Bersama Ciptakan Sekolah Sehat!
+                Bersama Ciptakan Sekolah Sehat!
               </h1>
               <p className="text-base text-[#475367]">Bersama Komunitas UKS, kita bisa lebih peduli dan memberikan perhatian khusus pada kesehatan di sekolah. Ayo, bergabunglah dan berikan kontribusimu!</p>
               <Button asChild variant="outline" size="lg" className="w-fit bg-white">

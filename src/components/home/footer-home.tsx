@@ -7,7 +7,7 @@ const FooterHome = () => {
   return (
     <>
       <footer className="pt-28">
-        <div className="container">
+        <div className="container lg:px-20">
           <div className="flex flex-col lg:flex-row justify-around gap-4">
             <div className="max-w-[22rem] flex items-center gap-3 h-fit">
               <div className="">
@@ -15,7 +15,7 @@ const FooterHome = () => {
                   quality={100}
                   width={150}
                   height={150}
-                  src="/assets/logo/smk7-logo.webp"
+                  src="/assets/logo/logo-smk7.png"
                   alt="logo SMK 7 Samarinda"
                 />
               </div>

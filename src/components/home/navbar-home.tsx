@@ -29,7 +29,7 @@ const NavbarHome = () => {
   return (
     <>
       <nav className="sticky top-0 z-20 bg-white shadow-md w-full">
-        <div className="container py-4 md:px-16 flex items-center justify-between">
+        <div className="container py-4 lg:px-20 flex items-center justify-between">
           <Link href="/">
             <Image className="w-[13.5rem] h-10" quality={100} width={250} height={250} src="/uks-logo.webp" alt="icon-uks"/>
           </Link>
