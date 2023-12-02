@@ -24,7 +24,7 @@ const Page: NextPageWithLayout = () => {
         <meta property='og:site_name' content="UKS-SMK 7" />
         <meta property='og:description' content="Usaha Kesehatan Sekolah SMK 7 Samarinda" />
         <meta property='og:title' content="UKS-SMK 7" />
-        <meta name='image' property='og:image' content="https://uks-smk7.vercel.app/og-image.webp" />
+        <meta name='image' property='og:image' content="https://uks-smk7.vercel.app/og-image.png" />
       </Head>
       <section className="py-28">
         <div className="container lg:px-20 flex items-center justify-between">
