@@ -23,7 +23,7 @@ const Page: NextPageWithLayout = () => {
         <meta property='og:site_name' content="UKS-SMK 7" />
         <meta property='og:description' content="Usaha Kesehatan Sekolah SMK 7 Samarinda" />
         <meta property='og:title' content="UKS-SMK 7" />
-        <meta name='image' property='og:image' content="/uks-logo.webp" />
+        <meta name='image' property='og:image' content="/og-image.webp" />
       </Head>
       <section className="container relative flex items-center max-h-full h-[42rem]">
         <div className="max-w-xl relative flex flex-col">
