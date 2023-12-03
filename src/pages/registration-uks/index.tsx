@@ -89,8 +89,8 @@ const Page: NextPageWithLayout = () => {
                 />
                 {errors.nama?.message && <p className="text-xs font-medium text-red-500">{errors.nama?.message}</p>}
               </div>
-              <div className="grid grid-cols-4 gap-4">
-                <div className="col-span-2 flex flex-col gap-2">
+              <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+                <div className="md:col-span-2 flex flex-col gap-2">
                   <Label htmlFor="nisn">NISN: </Label>
                   <Input
                     {...register("nisn")}
@@ -100,19 +100,14 @@ const Page: NextPageWithLayout = () => {
                   />
                   {errors.nisn?.message && <p className="text-xs font-medium text-red-500">{errors.nisn?.message}</p>}
                 </div>
-                <div className="col-span-2 flex flex-col gap-2">
+                <div className="md:col-span-2 flex flex-col gap-2">
                   <Label htmlFor="no-telepon">No. Telepon / HP: </Label>
                   <Input {...register("notelp")} type="number" id="no-telepon" className="appearance-none"  placeholder="0812********"/>
                   {errors.notelp?.message && <p className="text-xs font-medium text-red-500">{errors.notelp?.message}</p>}
                 </div>
               </div>
-              <div className="flex flex-col gap-2">
-                <Label htmlFor="alamat">Alamat: </Label>
-                <textarea {...register("alamat")} className="flex h-36 resize-none w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50" id="alamat"  placeholder="Jl. Bungtomo"/>
-                {errors.alamat?.message && <p className="text-xs font-medium text-red-500">{errors.alamat?.message}</p>}
-              </div>
               <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-                <div className="col-span-2 flex flex-col gap-2">
+                <div className="md:col-span-2 flex flex-col gap-2">
                   <Label htmlFor="kelas">Kelas: </Label>
                   <Controller
                     render={({field}) => (
@@ -131,7 +126,7 @@ const Page: NextPageWithLayout = () => {
 
                   {errors.kelas?.message && <p className="text-xs font-medium text-red-500">{errors.kelas?.message}</p>}
                 </div>
-                <div className="col-span-2 flex flex-col gap-2">
+                <div className="md:col-span-2 flex flex-col gap-2">
                   <Label htmlFor="jenis-kelamin">
                     Jenis Kelamin:
                   </Label>
@@ -160,25 +155,25 @@ const Page: NextPageWithLayout = () => {
               </div>
               <div className="flex flex-col gap-2">
                 <Label>Tempat Tanggal Lahir:</Label>
-                <div className="flex items-center gap-4">
+                <div className="flex flex-col md:flex-row items-center gap-4">
                   <Input onChange={(e) => setBirth((prev) => ({
                     ...prev,
                     place: e.target.value
-                  }))} className="rounded-none shadow-none border-0 border-b focus-visible:ring-0" placeholder="Tempat Lahir"/>
-                  /
+                  }))} placeholder="Tempat Lahir"/>
                   <Controller
                     render={({field}) => (
-                     <DatePicker
-                       mode="single"
-                       date={field.value as Date}
-                       onSelect={(e) => {
-                         field.onChange(e)
-                         setBirth((prev) => ({
-                           ...prev,
-                           date: e
-                         }))
-                       }}
-                     />
+                      <DatePicker
+                        className="w-full border rounded-md shadow-sm"
+                        mode="single"
+                        date={field.value as Date}
+                        onSelect={(e) => {
+                          field.onChange(e)
+                          setBirth((prev) => ({
+                            ...prev,
+                            date: e
+                          }))
+                        }}
+                      />
                     )}
                     control={control}
                     name="ttl"
@@ -186,6 +181,13 @@ const Page: NextPageWithLayout = () => {
                 </div>
                 {errors.ttl?.message && <p className="text-xs font-medium text-red-500">{errors.ttl?.message}</p>}
               </div>
+              <div className="flex flex-col gap-2">
+                <Label htmlFor="alamat">Alamat: </Label>
+                <textarea {...register("alamat")} className="flex h-36 resize-none w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50" id="alamat"  placeholder="Jl. Bungtomo"/>
+                {errors.alamat?.message && <p className="text-xs font-medium text-red-500">{errors.alamat?.message}</p>}
+              </div>
+
+
             </div>
             <Button disabled={createMember.isLoading} className="ml-auto">
               {createMember.isLoading ? (

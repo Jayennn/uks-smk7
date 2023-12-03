@@ -10,22 +10,23 @@ import { CalendarIcon } from "lucide-react"
 import {DayPickerSingleProps} from "react-day-picker";
 
 type DatePickerProps = DayPickerSingleProps & {
-  date: Date | undefined
+  date: Date | undefined,
+  className: string
 }
 
-export function DatePicker({onSelect, date, mode}: DatePickerProps) {
+export function DatePicker({onSelect, date, mode, className}: DatePickerProps) {
   return (
     <Popover>
       <PopoverTrigger asChild>
         <Button
           variant={"outline"}
-          className={cn("w-[320px] justify-start text-left font-normal border-0 rounded-none shadow-none border-b", !date && "text-muted-foreground")}
+          className={cn("w-[320px] justify-start text-left font-normal border-0 rounded-none shadow-none border-b", !date && "text-muted-foreground", className)}
         >
           <CalendarIcon className="mr-2 h-4 w-4" />
           {isValid(date) && date ? format(date, "dd-MM-yyyy") : <span>Pick a date</span>}
         </Button>
       </PopoverTrigger>
-      <PopoverContent align="start" className="w-[20rem] p-0">
+      <PopoverContent align="end" className="w-popover md:w-[320px]  p-0">
         <Calendar
           mode={mode}
           captionLayout="dropdown-buttons"

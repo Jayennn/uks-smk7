@@ -22,7 +22,6 @@ const NavbarHome = () => {
         title: "Error",
         description: data?.errZod ?? message,
         variant: "destructive"
-
       })
     },
   })
