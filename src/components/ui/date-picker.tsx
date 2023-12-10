@@ -11,7 +11,7 @@ import {DayPickerSingleProps} from "react-day-picker";
 
 type DatePickerProps = DayPickerSingleProps & {
   date: Date | undefined,
-  className: string
+  className?: string
 }
 
 export function DatePicker({onSelect, date, mode, className}: DatePickerProps) {

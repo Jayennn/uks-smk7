@@ -6,7 +6,6 @@ import {
   DialogContent,
   DialogDescription,
   DialogHeader,
-  DialogOverlay,
   DialogTitle
 } from "@/components/ui/dialog";
 import {DialogProps} from "@radix-ui/react-dialog";
@@ -205,17 +204,15 @@ const ModalCreateMember = ({...props}: DialogProps) => {
   return (
     <>
       <Dialog {...props}>
-        <DialogOverlay>
-          <DialogContent className="font-inter sm:max-w-[580px]">
-              <DialogHeader>
-                <DialogTitle>Tambah Anggota</DialogTitle>
-                <DialogDescription>Formulir Tambah Anggota UKS</DialogDescription>
-              </DialogHeader>
-                <FormCreateMember
-                  close={props.onOpenChange}
-                />
-          </DialogContent>
-        </DialogOverlay>
+        <DialogContent className="font-inter sm:max-w-[580px]">
+            <DialogHeader>
+              <DialogTitle>Tambah Anggota</DialogTitle>
+              <DialogDescription>Formulir Tambah Anggota UKS</DialogDescription>
+            </DialogHeader>
+              <FormCreateMember
+                close={props.onOpenChange}
+              />
+        </DialogContent>
       </Dialog>
     </>
   )

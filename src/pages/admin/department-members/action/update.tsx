@@ -140,18 +140,21 @@ const FormUpdateMember = ({id, close}: UpdateMemberProps) => {
                 <Skeleton className="h-9 w-full"/>
               ) : (
                 <Controller
-                  render={({field}) => (
-                    <>
-                      <Combobox
-                        className="w-full"
-                        setValue={(v: string) => field.onChange(v.toUpperCase())}
-                        value={field.value}
-                        label={field.value ? field.value : "Pilih Kelas"}
-                        placeholder="Cari Kelas..."
-                        data={[...PPLGClasses, ...DKVClasses, ...TJKTClasses, ...ANIMASIClasses]}
-                      />
-                    </>
-                  )}
+                  render={({field}) => {
+                    console.log(field.value)
+                    return (
+                        <>
+                          <Combobox
+                            className="w-full"
+                            setValue={(v: string) => field.onChange(v.toUpperCase())}
+                            value={field.value}
+                            label={field.value ? field.value : "Pilih Kelas"}
+                            placeholder="Cari Kelas..."
+                            data={[...PPLGClasses, ...DKVClasses, ...TJKTClasses, ...ANIMASIClasses]}
+                          />
+                        </>
+                      )
+                  }}
                   name="kelas"
                   control={control}
                 />

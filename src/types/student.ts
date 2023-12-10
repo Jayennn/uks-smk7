@@ -6,11 +6,15 @@ export type StudentClasses = {
 const DKVClasses: StudentClasses[] = [
   {
     value: "X DKV 1",
-    label: "X DKV 1"
+    label: "X DKV 1",
   },
   {
     value: "X DKV 2",
     label: "X DKV 2"
+  },
+  {
+    value: "X DKV 3",
+    label: "X DKV 3",
   },
   {
     value: "XI DKV 1",
@@ -21,12 +25,20 @@ const DKVClasses: StudentClasses[] = [
     label: "XI DKV 2"
   },
   {
+    value: "XI DKV 3",
+    label: "XI DKV 3"
+  },
+  {
     value: "XII DKV 1",
     label: "XII DKV 1"
   },
   {
     value: "XII DKV 2",
     label: "XII DKV 2"
+  },
+  {
+    value: "XII DKV 3",
+    label: "XII DKV 3"
   },
 ]
 
@@ -102,8 +114,37 @@ const ANIMASIClasses: StudentClasses[] = [
     label: "X ANIMASI 1"
   },
   {
+    value: "X ANIMASI 2",
+    label: "X ANIMASI 2"
+  },
+  {
+    value: "X ANIMASI 3",
+    label: "X ANIMASI 3"
+  },
+  {
     value: "XI ANIMASI 1",
     label: "XI ANIMASI 1"
+  },
+  {
+    value: "XI ANIMASI 2",
+    label: "XI ANIMASI 2"
+  },
+  {
+    value: "XI ANIMASI 3",
+    label: "XI ANIMASI 3"
+  },
+  {
+    value: "XII ANIMASI 1",
+    label: "XII ANIMASI 1"
+  },
+ 
+   {
+    value: "XII ANIMASI 2",
+    label: "XII ANIMASI 2"
+  },
+   {
+    value: "XII ANIMASI 3",
+    label: "XII ANIMASI 3"
   }
 ]
 
