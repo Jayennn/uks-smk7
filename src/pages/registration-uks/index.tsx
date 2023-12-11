@@ -7,7 +7,7 @@ import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from "@/c
 import {Button} from "@/components/ui/button";
 import {Loader, Send} from "lucide-react";
 import {Controller, useForm} from "react-hook-form";
-import {UksMemberForm, uksMemberFormSchema} from "@/server/api/routers/uks-member/schema";
+import {UksMemberForm, uksMemberFormSchema} from "@/server/api/routers/departement-members/schema";
 import {zodResolver} from "@hookform/resolvers/zod";
 import {trpc} from "@/utils/trpc";
 import {toast} from "sonner";
