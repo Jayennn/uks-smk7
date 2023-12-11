@@ -2,8 +2,6 @@ import {createTRPCRouter, protectedProcedure} from "@/server/api/trpc";
 import {authToken, Axios} from "@/utils/axios";
 import {sectionFormReportSchema, SectionReport} from "@/server/api/routers/form/section-form/schema";
 import {z} from "zod"
-import {uksMemberFormSchema} from "@/server/api/routers/uks-member/schema";
-
 
 const IDsectionReport = z.object({
   id: z.number()
