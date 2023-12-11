@@ -47,7 +47,7 @@ const Switch = ({htmlFor, data}: SwitchProps) => {
   return (
     <>
 
-      <button onClick={handleStatusUpdate} disabled={true}  className={cn("p-[1px] disabled:cursor-not-allowed inline-flex items-center w-[40px] h-[20px] border border-zinc-700 bg-[#F9FAFB] rounded-full",
+      <button onClick={handleStatusUpdate}  className={cn("p-[1px] disabled:cursor-not-allowed inline-flex items-center w-[40px] h-[20px] border border-zinc-700 bg-[#F9FAFB] rounded-full",
         isOn ? "justify-end" : "justify-start")}>
 
           <motion.div layout className={cn("shadow-md w-4 h-4 bg-red-500 rounded-full", isOn ? "bg-green-500" : "bg-red-500")}></motion.div>
