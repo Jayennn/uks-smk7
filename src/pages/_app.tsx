@@ -7,6 +7,10 @@ import {NextPage} from "next";
 import {trpc} from "@/utils/trpc";
 import { Toaster } from "sonner"
 import NProgress from "nextjs-progressbar";
+import moment from "moment";
+import 'moment/locale/id'
+
+moment.locale()
 
 export type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
     getLayout?: (page: ReactElement) => ReactNode

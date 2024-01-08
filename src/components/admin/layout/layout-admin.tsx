@@ -4,6 +4,7 @@ import NavbarAdmin from "@/components/admin/layout/navbar-admin"
 import { useIsClient } from "@uidotdev/usehooks";
 import {Loader} from "lucide-react";
 
+
 const Layout = (props: PropsWithChildren) => {
   const isClient = useIsClient();
 
@@ -30,6 +31,7 @@ const Layout = (props: PropsWithChildren) => {
             </div>
           </div>
         </div>
+        {/*<SidebarForm/>*/}
       </div>
     </>
   )

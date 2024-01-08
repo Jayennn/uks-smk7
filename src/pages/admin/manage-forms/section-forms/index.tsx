@@ -11,7 +11,7 @@ const Page: NextPageWithLayout = () => {
   const {data: section, isLoading} = trpc.form.section.all.useQuery()
 
   const table = useReactTable({
-    data: section?.bagian ?? [],
+    data: section?.data ?? [],
     columns,
     getCoreRowModel: getCoreRowModel()
   })

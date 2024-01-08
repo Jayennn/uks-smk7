@@ -10,8 +10,10 @@ const Page: NextPageWithLayout = () => {
 
   const {data: subSection, isLoading} = trpc.form.subsection.all.useQuery()
 
+  console.log(subSection?.data)
+
   const table = useReactTable({
-    data: subSection?.subbagians ?? [],
+    data: subSection?.data ?? [],
     columns,
     getCoreRowModel: getCoreRowModel()
   })

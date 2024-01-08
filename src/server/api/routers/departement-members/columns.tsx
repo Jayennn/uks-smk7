@@ -1,6 +1,5 @@
 import {CellContext, ColumnDef} from "@tanstack/react-table";
 import {UksMember} from "@/server/api/routers/departement-members/schema";
-import {Badge} from "@/components/ui/badge";
 import {dated} from "@/lib/utils";
 import {trpc} from "@/utils/trpc";
 import {
@@ -8,8 +7,8 @@ import {
   DropdownMenuContent,
   DropdownMenuGroup,
   DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
+  DropdownMenuLabel, DropdownMenuPortal,
+  DropdownMenuSeparator, DropdownMenuSub, DropdownMenuSubContent, DropdownMenuSubTrigger,
   DropdownMenuTrigger
 } from "@/components/ui/dropdown-menu";
 import {Loader, MoreHorizontal} from "lucide-react";
@@ -23,7 +22,7 @@ import Switch from "@/components/Switch";
 
 
 const Action = ({row}: CellContext<UksMember, unknown>) => {
-  const {id} = row.original;
+  const {id, status_aktif, sebagai} = row.original;
   const ctx = trpc.useUtils();
   const [openDialog, setOpenDialog] = useState({
     delete: false,
@@ -37,6 +36,16 @@ const Action = ({row}: CellContext<UksMember, unknown>) => {
     onSuccess: async({message}) => {
       toast.success(message)
       await ctx.member.all.invalidate()
+    },
+    onError: ({data, message}) => {
+      toast.error(data?.errZod ?? message)
+    }
+  })
+
+
+  const updateStatus = trpc.member.statusUpdate.useMutation({
+    onSuccess: async({message}) => {
+      toast.success(message)
     },
     onError: ({data, message}) => {
       toast.error(data?.errZod ?? message)
@@ -92,7 +101,7 @@ const Action = ({row}: CellContext<UksMember, unknown>) => {
             <MoreHorizontal size={18}/>
           }
         </DropdownMenuTrigger>
-        <DropdownMenuContent className="font-inter" align="end">
+        <DropdownMenuContent className="font-inter text-sm w-40" align="end">
           <DropdownMenuLabel>Table Action</DropdownMenuLabel>
           <DropdownMenuSeparator />
           <DropdownMenuGroup>
@@ -122,6 +131,49 @@ const Action = ({row}: CellContext<UksMember, unknown>) => {
             }}>
               Edit
             </DropdownMenuItem>
+            <DropdownMenuSub>
+              <DropdownMenuSubTrigger>Update Status</DropdownMenuSubTrigger>
+              <DropdownMenuPortal>
+                <DropdownMenuSubContent>
+                  {status_aktif === "0" && (
+                    <>
+                      <DropdownMenuItem onClick={async() => {
+                        await updateStatus.mutateAsync({
+                          id: id.toString(),
+                          sebagai,
+                          status_aktif: "2"
+                        })
+                      }}>Terima</DropdownMenuItem>
+                      <DropdownMenuItem onClick={async() => {
+                        await updateStatus.mutateAsync({
+                          id: id.toString(),
+                          sebagai,
+                          status_aktif: "1"
+                        })
+                      }}>Tolak</DropdownMenuItem>
+                    </>
+                  )}
+                  {status_aktif === "1" && (
+                    <DropdownMenuItem onClick={async() => {
+                      await updateStatus.mutateAsync({
+                        id: id.toString(),
+                        sebagai,
+                        status_aktif: "2"
+                      })
+                    }}>Terima</DropdownMenuItem>
+                  )}
+                  {status_aktif === "2" && (
+                    <DropdownMenuItem onClick={async() => {
+                      await updateStatus.mutateAsync({
+                        id: id.toString(),
+                        sebagai,
+                        status_aktif: "1"
+                      })
+                    }}>Tolak</DropdownMenuItem>
+                  )}
+                </DropdownMenuSubContent>
+              </DropdownMenuPortal>
+            </DropdownMenuSub>
           </DropdownMenuGroup>
         </DropdownMenuContent>
       </DropdownMenu>
@@ -169,20 +221,20 @@ export const columns: ColumnDef<UksMember>[] = [
     accessorKey: "status_aktif",
     header: "Status",
     cell: ({row}) => {
-      const { status_aktif,  id, sebagai} = row.original;
+      const {status_aktif} = row.original;
 
-      return (
-        <>
-          <Switch
-            htmlFor="status"
-            data={{
-              id: id.toString(),
-              sebagai,
-              status_aktif
-            }}
-          />
-        </>
-      )
+      if(status_aktif === "0"){
+        return "Menunggu"
+      }
+
+      if(status_aktif === "1"){
+        return "Ditolak"
+      }
+
+      if(status_aktif === "2"){
+        return "Diterima"
+      }
+
     }
   },
   {

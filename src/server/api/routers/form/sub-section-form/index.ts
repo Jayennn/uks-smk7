@@ -16,7 +16,18 @@ export const subSectionReportRouter = createTRPCRouter({
 
       return res.data as {
         message: string,
-        subbagians: SubSectionReport[]
+        data: SubSectionReport[]
+      }
+    }),
+  single: protectedProcedure
+    .input(IDSubSection)
+    .query(async({ctx, input}) => {
+      const conf = authToken(ctx.token)
+      const res = await Axios.get(`/admin/rapor/form/subbagian/${input.id}`, conf)
+
+      return res.data as {
+        message: string,
+        data: SubSectionReport
       }
     }),
   create: protectedProcedure
@@ -27,7 +38,7 @@ export const subSectionReportRouter = createTRPCRouter({
 
       return res.data as {
         message: string,
-        subbagian: SubSectionReport
+        data: SubSectionReport
       }
     }),
   delete: protectedProcedure

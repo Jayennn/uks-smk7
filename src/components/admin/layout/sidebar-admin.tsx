@@ -5,12 +5,10 @@ import {ChevronDownIcon} from "@radix-ui/react-icons";
 import {cn} from "@/lib/utils";
 import {useRouter} from "next/router";
 import Link from "next/link";
-
-
 type LinkTypes = {
   icon: LucideIcon,
   label: string,
-  href: string
+  href?: string
   subItem?: Array<{
     label: string
     href: string
@@ -26,19 +24,22 @@ const linksDef: LinkTypes[] = [
   {
     icon: FileText,
     label: "Forms",
-    href: "/admin/manage-forms",
     subItem: [
       {
-        label: "Bagian Form Kesehatan",
+        label: "Bagian",
         href: "/admin/manage-forms/section-forms"
       },
       {
-        label: "Sub-Bagian Form Kesehatan",
+        label: "Sub-Bagian",
         href: "/admin/manage-forms/sub-section-forms"
       },
       {
-        label: "Opsi Rapor Kesehatan",
+        label: "Pertanyaan",
         href: "/admin/manage-forms/option-forms"
+      },
+      {
+        label: "Buat Form Kesehatan",
+        href: "/admin/manage-forms/create-form"
       },
       {
         label: "Form Rapor Kesehatan",
@@ -83,18 +84,24 @@ const SidebarAdmin = () => {
                       asChild
                       className={cn(
                         "transition-all px-4 py-3 hover:no-underline rounded-lg hover:bg-[#EEEEEE]",
-                        router.pathname ===  link.href && "bg-[#EEEEEE]/90",
+                         (router.pathname === link.href || link.subItem?.find((item) => item.href === router.pathname)) && "bg-[#EEEEEE]/90",
                       )}>
-                      <Link href={link.href} className="flex items-center justify-between">
-                        <div className="flex items-center gap-3">
-                          <link.icon size={20}/>
-                          {link.label}
+                      {link.href ? (
+                        <Link href={link?.href} className="flex items-center justify-between">
+                          <div className="flex items-center gap-3">
+                            <link.icon size={20}/>
+                            {link.label}
+                          </div>
+                        </Link>
+                      ) : (
+                        <div className="flex items-center justify-between">
+                          <div className="flex items-center gap-3">
+                            <link.icon size={20}/>
+                            {link.label}
+                          </div>
+                          <ChevronDownIcon className="h-4 w-4 shrink-0 text-muted-foreground transition-transform duration-200"/>
                         </div>
-                        {link.subItem && (
-                          <ChevronDownIcon
-                            className="h-4 w-4 shrink-0 text-muted-foreground transition-transform duration-200"/>
-                        )}
-                      </Link>
+                      )}
 
                     </AccordionTrigger>
                     {link.subItem && (

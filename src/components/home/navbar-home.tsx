@@ -9,6 +9,7 @@ import {LogOut} from "lucide-react";
 const NavbarHome = () => {
   const {toast} = useToast();
   const {data: session} = useSession();
+  console.log(session)
 
   const logout = trpc.auth.logout.useMutation({
     onSuccess: ({ message }) => {
@@ -37,6 +38,11 @@ const NavbarHome = () => {
             <Link href="/" className="rounded-md flex items-center h-9 px-4 py-2">
               Beranda
             </Link>
+            {session?.user.level == "1" && (
+              <Link href="/admin" className="rounded-md flex items-center h-9 px-4 py-2">
+                Dashboard
+              </Link>
+            )}
             {session?.user ? (
               <Button className="text-sm border-green-500" size="sm" variant="outline" onClick={async () => {
                 await logout.mutateAsync();

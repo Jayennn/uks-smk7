@@ -12,6 +12,8 @@ export default withAuth(
       return NextResponse.redirect(new URL("/login"))
     }
 
+
+
     if (req.nextUrl.pathname.startsWith("/admin") && req.nextauth.token?.level != 1) {
       url.pathname = "/login"
       // @ts-ignore

@@ -12,7 +12,7 @@ const Page: NextPageWithLayout = () => {
   const {data: user, isLoading} = trpc.user.all.useQuery()
 
   const table = useReactTable({
-    data: user?.data ?? [],
+    data: user?.users ?? [],
     columns,
     getCoreRowModel: getCoreRowModel(),
     onColumnFiltersChange: setColumnFilter,

@@ -29,7 +29,7 @@ const Page: NextPageWithLayout = () => {
       <section className="py-28">
         <div className="container lg:px-20 flex items-center justify-between">
           <div className="max-w-xl relative flex flex-col">
-            <h1 className="text-5xl font-bold text-[#1D2739]  md:leading-[3.5rem]">
+            <h1 className="text-5xl font-bold text-[#1D2739] md:leading-[3.5rem]">
               Usaha Kesehatan Sekolah{" "}
               <span className="inline-block text-green-500">
                 SMK NEGERI 7
@@ -100,7 +100,7 @@ const Page: NextPageWithLayout = () => {
           </div>
           <div className="pt-[10rem] md:pt-0 h-full w-full flex items-center justify-center lg:justify-end">
             <div className="relative flex justify-center items-center">
-              <div className="bg-[#0D9247] w-[18rem] h-[19rem] md:w-[22rem] md:h-[18rem] lg:w-[26rem] lg:h-[20rem]
+              <div className="bg-[#0D9247] w-[16rem] h-[18rem] md:w-[22rem] md:h-[18rem] lg:w-[26rem] lg:h-[20rem]
                rounded-[50px] rotate-[35deg] drop-shadow-2xl"/>
               <Image
                 quality={100}

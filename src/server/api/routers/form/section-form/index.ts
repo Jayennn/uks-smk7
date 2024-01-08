@@ -14,7 +14,7 @@ export const sectionReportRouter = createTRPCRouter({
 
       return res.data as {
         message: string,
-        bagian: SectionReport[]
+        data: SectionReport[]
       }
     }),
   update: protectedProcedure
@@ -29,7 +29,7 @@ export const sectionReportRouter = createTRPCRouter({
 
       return res.data as {
         message: string,
-        bagian: SectionReport
+        data: SectionReport
       }
     }),
   delete: protectedProcedure
