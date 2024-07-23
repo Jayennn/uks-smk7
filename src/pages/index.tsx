@@ -58,7 +58,7 @@ const Page: NextPageWithLayout = () => {
                             We are currently working on this feature and will launch soon.
                         </p>
                     </div>
-                    <p className="text-[#475367]">
+                    <p className="text-[#475367] text-center">
                         In {time} seconds you will be redirected to{" "}
                         <Link className="underline text-green-500/80" href="https://uks.smkn7-smr.sch.id/">
                             https://uks.smkn7-smr.sch.id/
