@@ -49,12 +49,12 @@ const NavbarHome = () => {
   })
   return (
     <>
-      <nav className="sticky top-0 z-20 bg-white shadow-md w-full">
+      <nav className="sticky top-0 z-20 h-16 bg-white shadow-md w-full">
         <div className="container py-4 lg:px-20 flex items-center justify-between">
           <Link href="/">
             <Image className="w-[11rem] h-8 md:w-[13.5rem] md:h-10" quality={100} width={250} height={250} src="/uks-logo.webp" alt="icon-uks"/>
           </Link>
-          <div className="hidden md:flex text-sm items-center gap-4 font-medium">
+       {/*   <div className="hidden md:flex text-sm items-center gap-4 font-medium">
             <Link href="/" className="flex rounded-md  items-center h-9 px-4 py-2">
               Beranda
             </Link>
@@ -77,7 +77,7 @@ const NavbarHome = () => {
           <button onClick={() => setOpen(!open)} className="w-[32px] h-[32px] rounded-[50%] border flex lg:hidden justify-center items-center bg-transparent">
             <div className={cn("transform-hamburger -translate-y-[3.5px] w-[14px] h-[1.5px] bg-primary absolute", open && "translate-y-0 rotate-45 scale-x-[1.1]")} data-position="top"></div>
             <div className={cn("transform-hamburger translate-y-[3.5px] w-[14px] h-[1.5px] bg-primary absolute", open && "translate-y-0 -rotate-45 scale-x-[1.1]")} data-position="bottom"></div>
-          </button>
+          </button>*/}
         </div>
 
         <AnimatePresence>
